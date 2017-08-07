@@ -7,8 +7,12 @@ package com.tienda.ui;
 
 import com.tienda.dao.Categoria_producto_DAO;
 import com.tienda.dao.Categoria_producto_DAOImpl;
+import com.tienda.dao.GenericDAO;
+import com.tienda.dao.GenericDAOImpl;
 import com.tienda.entities.CategoriasProductos;
+import com.tienda.util.hibernate.HibernateUtil;
 import javax.swing.JOptionPane;
+import org.hibernate.Session;
 
 /**
  *
@@ -64,15 +68,15 @@ public class Inicio_ extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        /*CategoriasProductos categoriasProductos = new CategoriasProductos();
+        CategoriasProductos categoriasProductos = new CategoriasProductos();
         categoriasProductos.setNombre("Lacteos");
-        
-        Categoria_producto_DAO dao = new Categoria_producto_DAOImpl();
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        GenericDAO dao= new GenericDAOImpl(sesion);
         if (dao.guardar(categoriasProductos)) {
             JOptionPane.showConfirmDialog(this, "Exito!!!....");
         }else{
             JOptionPane.showMessageDialog(this, "Ocurrio un error");
-        }*/
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

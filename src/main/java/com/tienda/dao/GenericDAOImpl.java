@@ -5,7 +5,9 @@
  */
 package com.tienda.dao;
 
+import com.tienda.entities.TiposUsuarios;
 import com.tienda.entities.Usuarios;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,9 +23,9 @@ public class GenericDAOImpl implements GenericDAO<Object> {
 
     public GenericDAOImpl(Session sesion) {
         this.sesion = sesion;
-        
+
         //Se inicia la transacción si esta no es nula y no esta activa
-        if (transaction!=null && !transaction.isActive()) {
+        if (transaction != null && !transaction.isActive()) {
             transaction = sesion.beginTransaction();
         }
     }
@@ -57,6 +59,13 @@ public class GenericDAOImpl implements GenericDAO<Object> {
                 .setString(0, nombre_usuario)
                 .setString(1, contrasena).uniqueResult();
         return usuario;
+    }
+
+    @Override
+    public List<TiposUsuarios> buscarTodosTiposUsuarios() {
+        List<TiposUsuarios> tiposUsuarios = getSesion().createSQLQuery("SELECT * FROM tipos_usuarios").
+                addEntity(TiposUsuarios.class).list();
+        return tiposUsuarios;
     }
 
     /**

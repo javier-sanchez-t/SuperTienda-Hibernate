@@ -1,5 +1,5 @@
 package com.tienda.entities;
-// Generated 24/07/2017 11:14:36 PM by Hibernate Tools 4.3.1
+// Generated 6/08/2017 10:25:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,6 +12,7 @@ public class Usuarios  implements java.io.Serializable {
 
 
      private int usuarioId;
+     private TiposUsuarios tiposUsuarios;
      private String nombreUsuario;
      private String contrasena;
      private String nombre;
@@ -23,15 +24,17 @@ public class Usuarios  implements java.io.Serializable {
     }
 
 	
-    public Usuarios(int usuarioId, String nombreUsuario, String contrasena, String nombre, String apellidoP) {
+    public Usuarios(int usuarioId, TiposUsuarios tiposUsuarios, String nombreUsuario, String contrasena, String nombre, String apellidoP) {
         this.usuarioId = usuarioId;
+        this.tiposUsuarios = tiposUsuarios;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
     }
-    public Usuarios(int usuarioId, String nombreUsuario, String contrasena, String nombre, String apellidoP, String apellidoM, Set ventases) {
+    public Usuarios(int usuarioId, TiposUsuarios tiposUsuarios, String nombreUsuario, String contrasena, String nombre, String apellidoP, String apellidoM, Set ventases) {
        this.usuarioId = usuarioId;
+       this.tiposUsuarios = tiposUsuarios;
        this.nombreUsuario = nombreUsuario;
        this.contrasena = contrasena;
        this.nombre = nombre;
@@ -46,6 +49,13 @@ public class Usuarios  implements java.io.Serializable {
     
     public void setUsuarioId(int usuarioId) {
         this.usuarioId = usuarioId;
+    }
+    public TiposUsuarios getTiposUsuarios() {
+        return this.tiposUsuarios;
+    }
+    
+    public void setTiposUsuarios(TiposUsuarios tiposUsuarios) {
+        this.tiposUsuarios = tiposUsuarios;
     }
     public String getNombreUsuario() {
         return this.nombreUsuario;

@@ -5,7 +5,9 @@
  */
 package com.tienda.dao;
 
+import com.tienda.entities.TiposUsuarios;
 import com.tienda.entities.Usuarios;
+import java.util.List;
 import org.hibernate.Session;
 
 /**
@@ -14,6 +16,11 @@ import org.hibernate.Session;
  */
 public interface GenericDAO<T> {
     boolean guardar(Object T);
+    
     Usuarios login(String nombre_usuario, String contrasena);
+    
+    //Tipos usuarios
+    List<TiposUsuarios> buscarTodosTiposUsuarios();
+    
     Session getSesion();
 }

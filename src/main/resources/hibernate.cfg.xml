@@ -47,10 +47,11 @@ Contributor(s):
     <property name="hibernate.connection.password">javier</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
-    <mapping resource="/Ventas.hbm.xml"/>
-    <mapping resource="/Usuarios.hbm.xml"/>
-    <mapping resource="/CategoriasProductos.hbm.xml"/>
-    <mapping resource="/Proveedores.hbm.xml"/>
-    <mapping resource="/Productos.hbm.xml"/>
+    <mapping resource="com/tienda/entities/Ventas.hbm.xml"/>
+    <mapping resource="com/tienda/entities/TiposUsuarios.hbm.xml"/>
+    <mapping resource="com/tienda/entities/Productos.hbm.xml"/>
+    <mapping resource="com/tienda/entities/Proveedores.hbm.xml"/>
+    <mapping resource="com/tienda/entities/Usuarios.hbm.xml"/>
+    <mapping resource="com/tienda/entities/CategoriasProductos.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

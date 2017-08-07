@@ -105,6 +105,11 @@ public class Inicio extends javax.swing.JFrame {
 
         imenuUsuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         imenuUsuarios.setText("Usuarios");
+        imenuUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imenuUsuariosActionPerformed(evt);
+            }
+        });
         jMenu1.add(imenuUsuarios);
 
         iMenuProveedores.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
@@ -168,6 +173,12 @@ public class Inicio extends javax.swing.JFrame {
         PanelEscritorio.add(registro_proveedor);
         registro_proveedor.show();
     }//GEN-LAST:event_iMenuProveedoresActionPerformed
+
+    private void imenuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imenuUsuariosActionPerformed
+        Administracion_usuarios administracion_usuarios = new Administracion_usuarios(dao);
+        PanelEscritorio.add(administracion_usuarios);
+        administracion_usuarios.show();
+    }//GEN-LAST:event_imenuUsuariosActionPerformed
 
     /**
      * @param args the command line arguments

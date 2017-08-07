@@ -1,5 +1,5 @@
 package com.tienda.entities;
-// Generated 24/07/2017 11:14:36 PM by Hibernate Tools 4.3.1
+// Generated 6/08/2017 10:25:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
