@@ -35,7 +35,8 @@ public class Login extends javax.swing.JFrame {
         //Se inicializan los componentes necesarios (GUI)
         initComponents();
         setLocationRelativeTo(null);
-        
+        setTitle("Super tienda");
+
         //Se cierra la sesión al cerrar la ventana
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -61,6 +62,7 @@ public class Login extends javax.swing.JFrame {
         btnIniciarSesion = new javax.swing.JButton();
         txtContrasena = new javax.swing.JPasswordField();
         txtCancelar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
 
@@ -84,6 +86,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setText("Super Tienda");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -105,23 +110,29 @@ public class Login extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(68, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(23, 23, 23)
+                .addComponent(jLabel3)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIniciarSesion)
                     .addComponent(txtCancelar))
-                .addGap(27, 27, 27))
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,25 +150,31 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        String NOMBRE_USUARIO = txtUsuario.getText();
+        String NOMBRE_USUARIO = txtUsuario.getText().trim();
         String CONTRASENA = txtContrasena.getText();
 
-        GenericDAO dao = new GenericDAOImpl(session);
-        Usuarios usuario = dao.login(NOMBRE_USUARIO, CONTRASENA);
-        
-        //Si el usuario obtenido es diferente de nulo, las credenciales son correctas
-        if (usuario != null) {
-            Inicio inicio;
-            try {
-                inicio = new Inicio(dao);
-                this.show(false);
-                inicio.show(true);
-            } catch (IOException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "Ocurrio un error debido a: " + ex, "Error!", JOptionPane.ERROR_MESSAGE);
+        if (!"".equals(NOMBRE_USUARIO) && !"".equals(CONTRASENA)) {
+            GenericDAO dao = new GenericDAOImpl(session);
+            Usuarios usuario = dao.login(NOMBRE_USUARIO, CONTRASENA);
+
+            //Si el usuario obtenido es diferente de nulo, las credenciales son correctas
+            if (usuario != null) {
+                Inicio inicio;
+                try {
+                    inicio = new Inicio(dao);
+                    this.show(false);
+                    inicio.show(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Ocurrio un error debido a: " + ex, "Error!", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error!", JOptionPane.ERROR_MESSAGE);
+                txtUsuario.setText("");
+                txtContrasena.setText("");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ingrese su usuario y contraseña", "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
@@ -210,6 +227,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton txtCancelar;
     private javax.swing.JPasswordField txtContrasena;

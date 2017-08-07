@@ -155,7 +155,8 @@ public class Inicio extends javax.swing.JFrame {
 
     private void iMenuCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iMenuCerrarSesionActionPerformed
         setVisible(false);
-        dispose();
+        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_iMenuCerrarSesionActionPerformed
 
     private void iMenuProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iMenuProductosActionPerformed
