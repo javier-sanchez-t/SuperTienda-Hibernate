@@ -6,6 +6,7 @@
 package com.tienda.ui;
 
 import com.tienda.dao.GenericDAO;
+import com.tienda.entities.Usuarios;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class Inicio extends javax.swing.JFrame {
     /**
      * Creates new form Inicio
      */
-    public Inicio(GenericDAO dao) throws IOException {
+    public Inicio(GenericDAO dao, Usuarios usuario) throws IOException {
         //Se maximiza el Jframe
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Super tienda");
@@ -38,6 +39,8 @@ public class Inicio extends javax.swing.JFrame {
                dao.getSesion().close();
             }
         });
+        
+        lblUsuario.setText("BIENVENIDO: "+usuario.getNombre().toUpperCase()+" "+usuario.getApellidoP().toUpperCase());
     }
 
     /**
@@ -50,6 +53,7 @@ public class Inicio extends javax.swing.JFrame {
     private void initComponents() {
 
         PanelEscritorio = new javax.swing.JDesktopPane();
+        lblUsuario = new javax.swing.JLabel();
         Menus = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         iMenuCerrarSesion = new javax.swing.JMenuItem();
@@ -64,15 +68,27 @@ public class Inicio extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("FrameInicio"); // NOI18N
 
+        lblUsuario.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario.setText("usuario ");
+
+        PanelEscritorio.setLayer(lblUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout PanelEscritorioLayout = new javax.swing.GroupLayout(PanelEscritorio);
         PanelEscritorio.setLayout(PanelEscritorioLayout);
         PanelEscritorioLayout.setHorizontalGroup(
             PanelEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 649, Short.MAX_VALUE)
+            .addGroup(PanelEscritorioLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(lblUsuario)
+                .addContainerGap(544, Short.MAX_VALUE))
         );
         PanelEscritorioLayout.setVerticalGroup(
             PanelEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 397, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelEscritorioLayout.createSequentialGroup()
+                .addContainerGap(345, Short.MAX_VALUE)
+                .addComponent(lblUsuario)
+                .addGap(30, 30, 30))
         );
 
         menuArchivo.setText("Archivo");
@@ -236,6 +252,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem iMenuRegistroVentas;
     private javax.swing.JMenuItem imenuUsuarios;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuVentas;
     // End of variables declaration//GEN-END:variables
