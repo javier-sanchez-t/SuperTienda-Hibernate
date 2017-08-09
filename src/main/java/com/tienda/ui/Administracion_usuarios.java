@@ -8,9 +8,12 @@ package com.tienda.ui;
 import com.tienda.dao.GenericDAO;
 import com.tienda.entities.TiposUsuarios;
 import com.tienda.entities.Usuarios;
+import com.tienda.util.CorreoUtil;
+import com.tienda.util.StaticConstans;
 import com.tienda.util.Util;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.MessageDigest;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JComboBox;
@@ -237,16 +240,17 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
 
         if (!"".equals(EMAIL) && !"".equals(NOMBRE) && !"".equals(APELLIDO_P) && !"".equals(APELLIDO_M) && TIPO_USUARIO != 0) {
             //Se valida el email
-            if (Util.validarEmail(EMAIL)) {
+            if (CorreoUtil.validarEmail(EMAIL)) {
                 Random numberRandom = new Random();
                 String CONTRASENA = EMAIL + numberRandom.nextInt(10000) + 1;
+                String CONTRASENA_ENCRIPTADA = Util.encriptarContrasena(CONTRASENA);
 
                 TiposUsuarios tipoUsuario = new TiposUsuarios();
                 tipoUsuario = tiposUsuarios.get(comboTiposUsuarios.getSelectedIndex() - 1);
 
                 Usuarios usuario = new Usuarios();
                 usuario.setNombreUsuario(EMAIL);
-                usuario.setContrasena(CONTRASENA);
+                usuario.setContrasena(CONTRASENA_ENCRIPTADA);
                 usuario.setNombre(NOMBRE);
                 usuario.setApellidoP(APELLIDO_P);
                 usuario.setApellidoM(APELLIDO_M);
@@ -256,6 +260,17 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
                 if (dao.guardar(usuario)) {
                     JOptionPane.showMessageDialog(this, "Usuario registrado satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
                     limpiarCampos();
+
+                    //Se envia correo con contrasena
+                    String contenido = "<p style=\"font-family: Helvetica,sans-serif; font-size:30px; color:#505050; padding:20px 20px 0px 20px\" >" + StaticConstans.MENSAJE_CORREO_ENCABEZADO + "</p>";
+                    contenido += "<p style=\"font-family: Helvetica,sans-serif; font-size: 13px; line-height: 150%; color: #505050; padding: 20px 20px 0px 20px;\">" + StaticConstans.MENSAJE_CORREO_CUERPO + "<b>" + CONTRASENA + "</b></p>";
+                    contenido += "<p style=\"font-family: Helvetica,sans-serif; font-size: 13px; line-height: 150%; color: #505050; padding: 20px 20px 0px 20px;\">" + StaticConstans.MENSAJE_CORREO_PIE + "</p>";
+                    boolean correoEnviado = CorreoUtil.enviarCorreo(usuario.getNombreUsuario(), StaticConstans.ASUNTO, contenido);
+                    if (correoEnviado) {
+                        JOptionPane.showMessageDialog(this, "La contraseña para ingresar al sistema, se envió vía email", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "La contraseña para ingresar al sistema es: " + usuario.getContrasena(), "Éxito!", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar al usuario", "Error!", JOptionPane.ERROR_MESSAGE);
                 }

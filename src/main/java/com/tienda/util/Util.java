@@ -5,6 +5,8 @@
  */
 package com.tienda.util;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -13,17 +15,27 @@ import javax.mail.internet.InternetAddress;
  * @author MBN USER
  */
 public class Util {
-    
-    public static boolean validarEmail(String email){
-        boolean correoValido = false;
-        try{
-            InternetAddress internetAddress = new InternetAddress(email);
-            internetAddress.validate();
-            correoValido = true;
-        }catch(AddressException ex){
-            System.err.println("Error validando el email: "+ ex);
+
+    public static String encriptarContrasena(String passwordToHash) {
+        String generatedPassword = null;
+        try {
+            // Create MessageDigest instance for MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            //Add password bytes to digest
+            md.update(passwordToHash.getBytes());
+            //Get the hash's bytes 
+            byte[] bytes = md.digest();
+            //This bytes[] has bytes in decimal format;
+            //Convert it to hexadecimal format
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            //Get complete hashed password in hex format
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
-        return correoValido;
+        return generatedPassword;
     }
-    
 }

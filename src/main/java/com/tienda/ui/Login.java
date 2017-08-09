@@ -9,6 +9,7 @@ import com.tienda.dao.GenericDAO;
 import com.tienda.dao.GenericDAOImpl;
 import com.tienda.entities.Usuarios;
 import com.tienda.hibernate.HibernateUtil;
+import com.tienda.util.Util;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -38,8 +39,8 @@ public class Login extends javax.swing.JFrame {
         setTitle("Super tienda");
         
         //DATOS PRUEBA
-        txtUsuario.setText("javier");
-        txtContrasena.setText("javier");
+        txtUsuario.setText("jefe10jav@gmail.com");
+        txtContrasena.setText("jefe10jav@gmail.com85431");
 
         //Se cierra la sesión al cerrar la ventana
         this.addWindowListener(new WindowAdapter() {
@@ -159,7 +160,7 @@ public class Login extends javax.swing.JFrame {
 
         if (!"".equals(NOMBRE_USUARIO) && !"".equals(CONTRASENA)) {
             GenericDAO dao = new GenericDAOImpl(session);
-            Usuarios usuario = dao.login(NOMBRE_USUARIO, CONTRASENA);
+            Usuarios usuario = dao.login(NOMBRE_USUARIO, Util.encriptarContrasena(CONTRASENA));
 
             //Si el usuario obtenido es diferente de nulo, las credenciales son correctas
             if (usuario != null) {
