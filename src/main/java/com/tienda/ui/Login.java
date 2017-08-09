@@ -8,7 +8,7 @@ package com.tienda.ui;
 import com.tienda.dao.GenericDAO;
 import com.tienda.dao.GenericDAOImpl;
 import com.tienda.entities.Usuarios;
-import com.tienda.util.hibernate.HibernateUtil;
+import com.tienda.hibernate.HibernateUtil;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;

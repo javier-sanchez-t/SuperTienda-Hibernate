@@ -17,6 +17,7 @@ import org.hibernate.Session;
 public interface GenericDAO<T> {
     boolean guardar(Object T);
     
+    //Usuarios
     Usuarios login(String nombre_usuario, String contrasena);
     
     //Tipos usuarios

@@ -10,7 +10,7 @@ import com.tienda.dao.Categoria_producto_DAOImpl;
 import com.tienda.dao.GenericDAO;
 import com.tienda.dao.GenericDAOImpl;
 import com.tienda.entities.CategoriasProductos;
-import com.tienda.util.hibernate.HibernateUtil;
+import com.tienda.hibernate.HibernateUtil;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 

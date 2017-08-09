@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tienda.util.hibernate;
+package com.tienda.hibernate;
 
 import com.fasterxml.classmate.AnnotationConfiguration;
 import javax.imageio.spi.ServiceRegistry;

@@ -8,6 +8,7 @@ package com.tienda.ui;
 import com.tienda.dao.GenericDAO;
 import com.tienda.entities.TiposUsuarios;
 import com.tienda.entities.Usuarios;
+import com.tienda.util.Util;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -38,6 +39,14 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
         for (TiposUsuarios tipoUsuario : tiposUsuarios) {
             comboTiposUsuarios.addItem(tipoUsuario.getNombre());
         }
+    }
+
+    public void limpiarCampos() {
+        txtEmail.setText("");
+        txtNombre.setText("");
+        txtApellidoP.setText("");
+        txtApellidoM.setText("");
+        comboTiposUsuarios.setSelectedIndex(0);
     }
 
     /**
@@ -204,7 +213,7 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
                 .addComponent(detalle_admin_usuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(opciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(233, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +222,7 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(detalle_admin_usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(opciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -227,28 +236,32 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
         int TIPO_USUARIO = comboTiposUsuarios.getSelectedIndex();
 
         if (!"".equals(EMAIL) && !"".equals(NOMBRE) && !"".equals(APELLIDO_P) && !"".equals(APELLIDO_M) && TIPO_USUARIO != 0) {
-            Random numberRandom = new Random();
-            //String contrasena = EMAIL + numberRandom.nextInt(10000) + 1;
-            String contrasena = EMAIL ;
+            //Se valida el email
+            if (Util.validarEmail(EMAIL)) {
+                Random numberRandom = new Random();
+                String CONTRASENA = EMAIL + numberRandom.nextInt(10000) + 1;
 
-            TiposUsuarios tipoUsuario = new TiposUsuarios();
-            tipoUsuario = tiposUsuarios.get(comboTiposUsuarios.getSelectedIndex()-1);
+                TiposUsuarios tipoUsuario = new TiposUsuarios();
+                tipoUsuario = tiposUsuarios.get(comboTiposUsuarios.getSelectedIndex() - 1);
 
-            Usuarios usuario = new Usuarios();
-            usuario.setNombreUsuario(EMAIL);
-            usuario.setContrasena(contrasena);
-            usuario.setNombre(NOMBRE);
-            usuario.setApellidoP(APELLIDO_P);
-            usuario.setApellidoM(APELLIDO_M);
-            usuario.setTiposUsuarios(tipoUsuario);
+                Usuarios usuario = new Usuarios();
+                usuario.setNombreUsuario(EMAIL);
+                usuario.setContrasena(CONTRASENA);
+                usuario.setNombre(NOMBRE);
+                usuario.setApellidoP(APELLIDO_P);
+                usuario.setApellidoM(APELLIDO_M);
+                usuario.setTiposUsuarios(tipoUsuario);
 
-            //Se guarda al usuario
-            if (dao.guardar(usuario)) {
-                JOptionPane.showMessageDialog(this, "Usuario registrado satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
-            }else{
-                JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar al usuario", "Error!", JOptionPane.ERROR_MESSAGE);
+                //Se guarda al usuario
+                if (dao.guardar(usuario)) {
+                    JOptionPane.showMessageDialog(this, "Usuario registrado satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar al usuario", "Error!", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Ingrese un email valido", "Error!", JOptionPane.ERROR_MESSAGE);
             }
-
         } else {
             JOptionPane.showMessageDialog(this, "Ingrese los campos requeridos", "Error!", JOptionPane.ERROR_MESSAGE);
         }
@@ -259,7 +272,7 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnactualizarActionPerformed
 
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
-
+        limpiarCampos();
     }//GEN-LAST:event_btncancelarActionPerformed
 
     private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
