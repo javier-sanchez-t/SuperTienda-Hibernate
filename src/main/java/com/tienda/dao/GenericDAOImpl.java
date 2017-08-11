@@ -62,6 +62,13 @@ public class GenericDAOImpl implements GenericDAO<Object> {
     }
 
     @Override
+    public List<Usuarios> buscarUsuarios(String parametros) {
+        List<Usuarios> usuarios = (List<Usuarios>) getSesion().createSQLQuery("SELECT * FROM usuarios")
+                .addEntity(Usuarios.class).list();
+        return usuarios;
+    }
+
+    @Override
     public List<TiposUsuarios> buscarTodosTiposUsuarios() {
         List<TiposUsuarios> tiposUsuarios = getSesion().createSQLQuery("SELECT * FROM tipos_usuarios").
                 addEntity(TiposUsuarios.class).list();

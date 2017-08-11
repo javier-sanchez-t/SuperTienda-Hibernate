@@ -19,6 +19,7 @@ public interface GenericDAO<T> {
     
     //Usuarios
     Usuarios login(String nombre_usuario, String contrasena);
+    List<Usuarios> buscarUsuarios(String parametros);
     
     //Tipos usuarios
     List<TiposUsuarios> buscarTodosTiposUsuarios();
