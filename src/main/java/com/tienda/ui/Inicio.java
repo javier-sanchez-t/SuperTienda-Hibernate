@@ -181,7 +181,9 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_iMenuCerrarSesionActionPerformed
 
     private void iMenuProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iMenuProductosActionPerformed
-        
+        Administracion_productos administracion_productos = new Administracion_productos(dao);
+        PanelEscritorio.add(administracion_productos);
+        administracion_productos.show();
     }//GEN-LAST:event_iMenuProductosActionPerformed
 
     private void iMenuProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iMenuProveedoresActionPerformed

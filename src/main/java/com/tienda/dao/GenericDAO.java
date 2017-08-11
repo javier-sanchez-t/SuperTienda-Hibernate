@@ -5,6 +5,8 @@
  */
 package com.tienda.dao;
 
+import com.tienda.entities.CategoriasProductos;
+import com.tienda.entities.Proveedores;
 import com.tienda.entities.TiposUsuarios;
 import com.tienda.entities.Usuarios;
 import java.util.List;
@@ -23,6 +25,12 @@ public interface GenericDAO<T> {
     
     //Tipos usuarios
     List<TiposUsuarios> buscarTodosTiposUsuarios();
+    
+    //Proveedores
+    List<Proveedores> buscarTodosProveedores();
+    
+    //categorias productos
+    List<CategoriasProductos> buscarTodasCategoriasProductos();
     
     Session getSesion();
 }

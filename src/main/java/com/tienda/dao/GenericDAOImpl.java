@@ -5,6 +5,8 @@
  */
 package com.tienda.dao;
 
+import com.tienda.entities.CategoriasProductos;
+import com.tienda.entities.Proveedores;
 import com.tienda.entities.TiposUsuarios;
 import com.tienda.entities.Usuarios;
 import java.util.List;
@@ -70,9 +72,17 @@ public class GenericDAOImpl implements GenericDAO<Object> {
 
     @Override
     public List<TiposUsuarios> buscarTodosTiposUsuarios() {
-        List<TiposUsuarios> tiposUsuarios = getSesion().createSQLQuery("SELECT * FROM tipos_usuarios").
-                addEntity(TiposUsuarios.class).list();
-        return tiposUsuarios;
+        return getSesion().createCriteria(TiposUsuarios.class).list();
+    }
+
+    @Override
+    public List<Proveedores> buscarTodosProveedores() {
+        return getSesion().createCriteria(Proveedores.class).list();
+    }
+
+    @Override
+    public List<CategoriasProductos> buscarTodasCategoriasProductos() {
+        return getSesion().createCriteria(CategoriasProductos.class).list();  
     }
 
     /**
