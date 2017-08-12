@@ -19,8 +19,9 @@ import javax.swing.JFrame;
  * @author MBN USER
  */
 public class Inicio extends javax.swing.JFrame {
+
     private GenericDAO dao;
-    
+
     /**
      * Creates new form Inicio
      */
@@ -29,18 +30,18 @@ public class Inicio extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Super tienda");
         initComponents();
-        
+
         //Se recibe el dao creado en login (el dao ya contiene la sesión necesaria, para conulta a BD)
         this.dao = dao;
-        
+
         //Se cierra la sesión al cerrar la ventana
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-               dao.getSesion().close();
+                dao.getSesion().close();
             }
         });
-        
-        lblUsuario.setText("BIENVENIDO: "+usuario.getNombre().toUpperCase()+" "+usuario.getApellidoP().toUpperCase());
+
+        lblUsuario.setText("BIENVENIDO: " + usuario.getNombre().toUpperCase() + " " + usuario.getApellidoP().toUpperCase());
     }
 
     /**
@@ -187,9 +188,9 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_iMenuProductosActionPerformed
 
     private void iMenuProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iMenuProveedoresActionPerformed
-        Registro_proveedor registro_proveedor= new Registro_proveedor();
-        PanelEscritorio.add(registro_proveedor);
-        registro_proveedor.show();
+        Administracion_proveedores administracion_proveedores = new Administracion_proveedores(dao);
+        PanelEscritorio.add(administracion_proveedores);
+        administracion_proveedores.show();
     }//GEN-LAST:event_iMenuProveedoresActionPerformed
 
     private void imenuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imenuUsuariosActionPerformed
@@ -233,7 +234,7 @@ public class Inicio extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        /*java.awt.EventQueue.invokeLater(new Runnable() {
+ /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     new Inicio().setVisible(true);
