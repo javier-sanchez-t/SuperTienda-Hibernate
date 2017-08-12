@@ -40,6 +40,11 @@ public class Inicio extends javax.swing.JFrame {
                 dao.getSesion().close();
             }
         });
+        
+        //Se deshabilita la opción administración para usuarios no administradores
+        if(usuario.getTiposUsuarios().getTipoUsuarioId()==2){
+            menuAdministracion.setVisible(false);
+        }
 
         lblUsuario.setText("BIENVENIDO: " + usuario.getNombre().toUpperCase() + " " + usuario.getApellidoP().toUpperCase());
     }
@@ -60,7 +65,7 @@ public class Inicio extends javax.swing.JFrame {
         iMenuCerrarSesion = new javax.swing.JMenuItem();
         menuVentas = new javax.swing.JMenu();
         iMenuRegistroVentas = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        menuAdministracion = new javax.swing.JMenu();
         imenuUsuarios = new javax.swing.JMenuItem();
         iMenuProveedores = new javax.swing.JMenuItem();
         iMenuCategorias = new javax.swing.JMenuItem();
@@ -118,7 +123,7 @@ public class Inicio extends javax.swing.JFrame {
 
         Menus.add(menuVentas);
 
-        jMenu1.setText("Administración");
+        menuAdministracion.setText("Administración");
 
         imenuUsuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         imenuUsuarios.setText("Usuarios");
@@ -127,7 +132,7 @@ public class Inicio extends javax.swing.JFrame {
                 imenuUsuariosActionPerformed(evt);
             }
         });
-        jMenu1.add(imenuUsuarios);
+        menuAdministracion.add(imenuUsuarios);
 
         iMenuProveedores.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         iMenuProveedores.setText("Proveedores");
@@ -136,7 +141,7 @@ public class Inicio extends javax.swing.JFrame {
                 iMenuProveedoresActionPerformed(evt);
             }
         });
-        jMenu1.add(iMenuProveedores);
+        menuAdministracion.add(iMenuProveedores);
 
         iMenuCategorias.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         iMenuCategorias.setText("Categorías de productos");
@@ -145,7 +150,7 @@ public class Inicio extends javax.swing.JFrame {
                 iMenuCategoriasActionPerformed(evt);
             }
         });
-        jMenu1.add(iMenuCategorias);
+        menuAdministracion.add(iMenuCategorias);
 
         iMenuProductos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         iMenuProductos.setText("Productos");
@@ -154,9 +159,9 @@ public class Inicio extends javax.swing.JFrame {
                 iMenuProductosActionPerformed(evt);
             }
         });
-        jMenu1.add(iMenuProductos);
+        menuAdministracion.add(iMenuProductos);
 
-        Menus.add(jMenu1);
+        Menus.add(menuAdministracion);
 
         setJMenuBar(Menus);
 
@@ -265,8 +270,8 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem iMenuProveedores;
     private javax.swing.JMenuItem iMenuRegistroVentas;
     private javax.swing.JMenuItem imenuUsuarios;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JLabel lblUsuario;
+    private javax.swing.JMenu menuAdministracion;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuVentas;
     // End of variables declaration//GEN-END:variables
