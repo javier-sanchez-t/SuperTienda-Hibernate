@@ -6,6 +6,7 @@
 package com.tienda.dao;
 
 import com.tienda.entities.CategoriasProductos;
+import com.tienda.entities.Productos;
 import com.tienda.entities.Proveedores;
 import com.tienda.entities.TiposUsuarios;
 import com.tienda.entities.Usuarios;
@@ -83,6 +84,14 @@ public class GenericDAOImpl implements GenericDAO<Object> {
     @Override
     public List<CategoriasProductos> buscarTodasCategoriasProductos() {
         return getSesion().createCriteria(CategoriasProductos.class).list();
+    }
+
+    @Override
+    public Productos buscarProductoPorCodigo(String codigo) {
+        Productos producto = (Productos) getSesion().createSQLQuery("SELECT * FROM productos WHERE producto_id=?")
+                .addEntity(Productos.class)
+                .setString(0, codigo).uniqueResult();
+        return producto;
     }
 
     /**

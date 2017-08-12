@@ -5,17 +5,34 @@
  */
 package com.tienda.ui;
 
+import com.tienda.dao.GenericDAO;
+import com.tienda.entities.Productos;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MBN USER
  */
 public class Registro_ventas extends javax.swing.JInternalFrame {
+    
+    private GenericDAO dao;
+    public DefaultTableModel model;
+    String CODIGO = "";
+    int TOTAL = 0;
 
     /**
      * Creates new form Registro_ventas
      */
-    public Registro_ventas() {
+    public Registro_ventas(GenericDAO dao) {
         initComponents();
+
+        //Se recibe el dao desde el jframe inicio
+        this.dao = dao;
+
+        //Se establecen los titulos de la tabla
+        String titulos[] = {"Num. productos", "Producto", "Descripción"};
+        model = new DefaultTableModel(null, titulos);
+        tablaProductos.setModel(model);
     }
 
     /**
@@ -27,26 +44,134 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        txtCodigo = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaProductos = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JLabel();
+
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setTitle("Registro de ventas");
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Producto"));
+
+        txtCodigo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("$ 0.0");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(145, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(jLabel1))
+                .addContainerGap())
+        );
+
+        tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaProductos);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setText("TOTAL: $");
+
+        txtTotal.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        txtTotal.setText("0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTotal)
+                .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtTotal))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
+        CODIGO = txtCodigo.getText().trim();
+        
+        //Se consulta el producto
+        Productos producto = dao.buscarProductoPorCodigo(CODIGO);
+        if (producto != null) {
+            Object[] row = new Object[3];
+            row[0] = 1;
+            row[1] = producto.getNombre();
+            row[2] = producto.getTamano();
+            TOTAL += producto.getPrecio();
+            
+            //Se establecen los datos en la vista
+            txtTotal.setText(TOTAL + "");
+            model.addRow(row);
+            tablaProductos.setModel(model);
+            
+            //Se limpia el campo de codigo de barras
+            txtCodigo.setText("");
+        }
+    }//GEN-LAST:event_txtCodigoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tablaProductos;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JLabel txtTotal;
     // End of variables declaration//GEN-END:variables
 }

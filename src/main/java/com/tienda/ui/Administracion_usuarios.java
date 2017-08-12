@@ -253,6 +253,7 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaUsuarios.setEnabled(false);
         jScrollPane1.setViewportView(tablaUsuarios);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -354,47 +355,43 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
         String APELLIDO_P = txtApellidoP.getText().trim();
         String APELLIDO_M = txtApellidoM.getText().trim();
         int TIPO_USUARIO = comboTiposUsuarios.getSelectedIndex();
-        String SQL_WHERE = "";
+        String SQL_WHERE = " WHERE 1=1";
 
-        if (!"".equals(EMAIL) | !"".equals(NOMBRE) | !"".equals(APELLIDO_P) | !"".equals(APELLIDO_M) | TIPO_USUARIO != 0) {
-            SQL_WHERE += " WHERE 1=1";
-            if (!"".equals(EMAIL)) {
-                SQL_WHERE += " AND nombre_usuario like '%" + EMAIL + "%'";
-            }
-            if (!"".equals(NOMBRE)) {
-                SQL_WHERE += " AND nombre like '%" + NOMBRE + "%'";
-            }
-            if (!"".equals(APELLIDO_P)) {
-                SQL_WHERE += " AND apellido_p like '%" + APELLIDO_P + "%'";
-            }
-            if (!"".equals(APELLIDO_M)) {
-                SQL_WHERE += " AND apellido_m like '%" + APELLIDO_M + "%'";
-            }
-            if (TIPO_USUARIO != 0) {
-                SQL_WHERE += " AND tipo_usuario=" + TIPO_USUARIO + "";
-            }
-
-            //Remueve los elementos contenidos en la tabla
-            while (model.getRowCount() > 0) {
-                model.removeRow(0);
-            }
-
-            //Se consultan los datos
-            List<Usuarios> usuarios = dao.buscarUsuarios(SQL_WHERE);
-            for (Usuarios usuario : usuarios) {
-                Object[] u = new Object[6];
-                u[0] = usuario.getUsuarioId();
-                u[1] = usuario.getNombreUsuario();
-                u[2] = usuario.getNombre();
-                u[3] = usuario.getApellidoP();
-                u[4] = usuario.getApellidoM();
-                u[5] = usuario.getTiposUsuarios().getNombre();
-                model.addRow(u);
-            }
-            tablaUsuarios.setModel(model);
+        if (!"".equals(EMAIL)) {
+            SQL_WHERE += " AND nombre_usuario like '%" + EMAIL + "%'";
+        }
+        if (!"".equals(NOMBRE)) {
+            SQL_WHERE += " AND nombre like '%" + NOMBRE + "%'";
+        }
+        if (!"".equals(APELLIDO_P)) {
+            SQL_WHERE += " AND apellido_p like '%" + APELLIDO_P + "%'";
+        }
+        if (!"".equals(APELLIDO_M)) {
+            SQL_WHERE += " AND apellido_m like '%" + APELLIDO_M + "%'";
+        }
+        if (TIPO_USUARIO != 0) {
+            SQL_WHERE += " AND tipo_usuario=" + TIPO_USUARIO + "";
         }
 
+        //Remueve los elementos contenidos en la tabla
+        while (model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
 
+        //Se consultan los datos
+        List<Usuarios> usuarios = dao.buscarUsuarios(SQL_WHERE);
+        for (Usuarios usuario : usuarios) {
+            Object[] u = new Object[6];
+            u[0] = usuario.getUsuarioId();
+            u[1] = usuario.getNombreUsuario();
+            u[2] = usuario.getNombre();
+            u[3] = usuario.getApellidoP();
+            u[4] = usuario.getApellidoM();
+            u[5] = usuario.getTiposUsuarios().getNombre();
+            model.addRow(u);
+            tablaUsuarios.setModel(model);
+        }
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
 

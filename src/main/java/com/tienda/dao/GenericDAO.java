@@ -6,6 +6,7 @@
 package com.tienda.dao;
 
 import com.tienda.entities.CategoriasProductos;
+import com.tienda.entities.Productos;
 import com.tienda.entities.Proveedores;
 import com.tienda.entities.TiposUsuarios;
 import com.tienda.entities.Usuarios;
@@ -31,6 +32,9 @@ public interface GenericDAO<T> {
     
     //categorias productos
     List<CategoriasProductos> buscarTodasCategoriasProductos();
+    
+    //Productos
+    Productos buscarProductoPorCodigo(String codigo);
     
     Session getSesion();
 }

@@ -180,7 +180,7 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iMenuRegistroVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iMenuRegistroVentasActionPerformed
-        Registro_ventas registro_ventas = new Registro_ventas();
+        Registro_ventas registro_ventas = new Registro_ventas(dao);
         PanelEscritorio.add(registro_ventas);
         registro_ventas.show();
     }//GEN-LAST:event_iMenuRegistroVentasActionPerformed
