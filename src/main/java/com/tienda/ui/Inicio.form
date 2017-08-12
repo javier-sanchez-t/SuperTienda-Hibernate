@@ -74,6 +74,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Categor&#xed;as de productos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="iMenuCategoriasActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="iMenuProductos">
               <Properties>

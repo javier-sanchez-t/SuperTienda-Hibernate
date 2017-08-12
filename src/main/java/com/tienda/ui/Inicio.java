@@ -140,6 +140,11 @@ public class Inicio extends javax.swing.JFrame {
 
         iMenuCategorias.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         iMenuCategorias.setText("Categorías de productos");
+        iMenuCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iMenuCategoriasActionPerformed(evt);
+            }
+        });
         jMenu1.add(iMenuCategorias);
 
         iMenuProductos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
@@ -198,6 +203,12 @@ public class Inicio extends javax.swing.JFrame {
         PanelEscritorio.add(administracion_usuarios);
         administracion_usuarios.show();
     }//GEN-LAST:event_imenuUsuariosActionPerformed
+
+    private void iMenuCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iMenuCategoriasActionPerformed
+        Administracion_cat_productos admin_cat_product = new Administracion_cat_productos(dao);
+        PanelEscritorio.add(admin_cat_product);
+        admin_cat_product.show();
+    }//GEN-LAST:event_iMenuCategoriasActionPerformed
 
     /**
      * @param args the command line arguments
