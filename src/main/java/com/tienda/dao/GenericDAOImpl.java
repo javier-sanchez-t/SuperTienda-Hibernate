@@ -65,7 +65,9 @@ public class GenericDAOImpl implements GenericDAO<Object> {
 
     @Override
     public List<Usuarios> buscarUsuarios(String parametros) {
-        List<Usuarios> usuarios = (List<Usuarios>) getSesion().createSQLQuery("SELECT * FROM usuarios")
+        System.out.println("SQL==========>>");
+        System.out.println("SELECT * FROM usuarios" + parametros);
+        List<Usuarios> usuarios = (List<Usuarios>) getSesion().createSQLQuery("SELECT * FROM usuarios" + parametros)
                 .addEntity(Usuarios.class).list();
         return usuarios;
     }
@@ -82,7 +84,7 @@ public class GenericDAOImpl implements GenericDAO<Object> {
 
     @Override
     public List<CategoriasProductos> buscarTodasCategoriasProductos() {
-        return getSesion().createCriteria(CategoriasProductos.class).list();  
+        return getSesion().createCriteria(CategoriasProductos.class).list();
     }
 
     /**
