@@ -7,8 +7,11 @@ package com.tienda.ui;
 
 import com.tienda.dao.GenericDAO;
 import com.tienda.entities.Productos;
+import com.tienda.entities.Usuarios;
+import com.tienda.entities.Ventas;
 import com.tienda.util.Util;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,8 +19,9 @@ import javax.swing.table.DefaultTableModel;
  * @author MBN USER
  */
 public class Registro_ventas extends javax.swing.JInternalFrame {
-    
+
     private GenericDAO dao;
+    private Usuarios usuario;
     public DefaultTableModel model;
     String CODIGO = "";
     double SUBTOTAL = 0.0;
@@ -28,11 +32,12 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
     /**
      * Creates new form Registro_ventas
      */
-    public Registro_ventas(GenericDAO dao) {
+    public Registro_ventas(GenericDAO dao, Usuarios usuario) {
         initComponents();
 
-        //Se recibe el dao desde el jframe inicio
+        //Se recibe el dao y usuario desde el jframe inicio
         this.dao = dao;
+        this.usuario = usuario;
 
         //Se establecen los titulos de la tabla
         String titulos[] = {"Código", "Num. productos", "Producto", "Descripción", "Precio Unitario"};
@@ -47,6 +52,21 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
 
         //Se establece la fecha
         lblFecha.setText("Fecha: " + Util.formatearFecha(new Date()));
+    }
+
+    public void limpiarFormulario() {
+        //Remueve los elementos contenidos en la tabla
+        while (model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
+
+        SUBTOTAL = 0.0;
+        IVA = 0.0;
+        TOTAL = 0.0;
+
+        lblSubtotal.setText(SUBTOTAL + "");
+        lblIva.setText(IVA + "");
+        lblTotal.setText(TOTAL + "");
     }
 
     /**
@@ -181,6 +201,11 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
         btnVender.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnVender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/shoping-cart.png"))); // NOI18N
         btnVender.setText("Vender");
+        btnVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVenderActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("IVA: $");
@@ -262,7 +287,7 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
                 }
             }
              */
-            
+
             Object[] row = new Object[5];
             row[0] = producto.getProductoId();
             row[1] = NUM_PRODUCTOS;
@@ -300,6 +325,43 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
             txtNumProductos.setText(NUM_PRODUCTOS + "");
         }
     }//GEN-LAST:event_restarNumProductosActionPerformed
+
+    private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+        boolean ventaGuardada = true;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String productoId = model.getValueAt(i, 0).toString();
+            double precioUnitario = Double.parseDouble(model.getValueAt(i, 4).toString());
+            int numProductos = Integer.parseInt(model.getValueAt(i, 1).toString());
+            double subtotal = numProductos * precioUnitario;
+            double iva = subtotal * 0.16;
+            double total = subtotal + iva;
+
+            Productos producto = new Productos();
+            producto.setProductoId(productoId);
+
+            Ventas venta = new Ventas();
+            venta.setMonto(total);
+            venta.setFecha(new Date());
+            venta.setProductos(producto);
+            venta.setUsuarios(usuario);
+
+            //Se guarda la venta
+            if (dao.guardar(venta) == false) {
+                ventaGuardada = false;
+                break;
+            }
+        }
+
+        if (ventaGuardada) {
+            JOptionPane.showMessageDialog(this, "Venta registrada satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar la venta", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        //Se limpian los datos del formulario
+        limpiarFormulario();
+    }//GEN-LAST:event_btnVenderActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSumarNumProductos;

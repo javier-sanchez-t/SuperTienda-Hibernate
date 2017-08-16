@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 public class Inicio extends javax.swing.JFrame {
 
     private GenericDAO dao;
+    private Usuarios usuario;
 
     /**
      * Creates new form Inicio
@@ -33,6 +34,7 @@ public class Inicio extends javax.swing.JFrame {
 
         //Se recibe el dao creado en login (el dao ya contiene la sesión necesaria, para conulta a BD)
         this.dao = dao;
+        this.usuario = usuario;
 
         //Se cierra la sesión al cerrar la ventana
         this.addWindowListener(new WindowAdapter() {
@@ -40,9 +42,9 @@ public class Inicio extends javax.swing.JFrame {
                 dao.getSesion().close();
             }
         });
-        
+
         //Se deshabilita la opción administración para usuarios no administradores
-        if(usuario.getTiposUsuarios().getTipoUsuarioId()==2){
+        if (usuario.getTiposUsuarios().getTipoUsuarioId() == 2) {
             menuAdministracion.setVisible(false);
         }
 
@@ -180,7 +182,7 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iMenuRegistroVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iMenuRegistroVentasActionPerformed
-        Registro_ventas registro_ventas = new Registro_ventas(dao);
+        Registro_ventas registro_ventas = new Registro_ventas(dao, usuario);
         PanelEscritorio.add(registro_ventas);
         registro_ventas.show();
     }//GEN-LAST:event_iMenuRegistroVentasActionPerformed
@@ -275,5 +277,19 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuVentas;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the usuario
+     */
+    public Usuarios getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(Usuarios usuario) {
+        this.usuario = usuario;
+    }
 
 }
