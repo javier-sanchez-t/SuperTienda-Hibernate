@@ -16,12 +16,13 @@ import javax.swing.table.DefaultTableModel;
  * @author MBN USER
  */
 public class Registro_ventas extends javax.swing.JInternalFrame {
-
+    
     private GenericDAO dao;
     public DefaultTableModel model;
     String CODIGO = "";
-    Double TOTAL = 0.0;
-    Double IVA = 0.0;
+    double SUBTOTAL = 0.0;
+    double IVA = 0.0;
+    double TOTAL = 0.0;
     int NUM_PRODUCTOS = 1;
 
     /**
@@ -34,13 +35,14 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
         this.dao = dao;
 
         //Se establecen los titulos de la tabla
-        String titulos[] = {"Código", "Num. productos", "Producto", "Descripción"};
+        String titulos[] = {"Código", "Num. productos", "Producto", "Descripción", "Precio Unitario"};
         model = new DefaultTableModel(null, titulos);
         tablaProductos.setModel(model);
 
         //Se establece el IVA, total y Num de productos inicial
-        lblTotal.setText(TOTAL + "");
+        lblSubtotal.setText(SUBTOTAL + "");
         lblIva.setText(IVA + "");
+        lblTotal.setText(TOTAL + "");
         txtNumProductos.setText(NUM_PRODUCTOS + "");
 
         //Se establece la fecha
@@ -72,6 +74,8 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
         btnVender = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         lblIva = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lblSubtotal = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -184,6 +188,12 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
         lblIva.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblIva.setText("-");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel5.setText("Subtotal: $");
+
+        lblSubtotal.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblSubtotal.setText("-");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -203,12 +213,14 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnVender)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel2)))
+                                .addComponent(jLabel2))
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTotal)
-                            .addComponent(lblIva))
-                        .addGap(83, 83, 83))))
+                            .addComponent(lblIva)
+                            .addComponent(lblSubtotal))
+                        .addGap(59, 59, 59))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,7 +229,11 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(lblSubtotal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(lblIva))
@@ -246,25 +262,30 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
                 }
             }
              */
-
-            Object[] row = new Object[4];
+            
+            Object[] row = new Object[5];
             row[0] = producto.getProductoId();
-            row[1] = 1;
+            row[1] = NUM_PRODUCTOS;
             row[2] = producto.getNombre();
             row[3] = producto.getTamano();
-            //TOTAL += producto.getPrecio();
+            row[4] = producto.getPrecio();
+            model.addRow(row);
+            tablaProductos.setModel(model);
 
-//            //Se calcula el IVA y el precio final
-//            IVA = TOTAL * 0.16;
-//            TOTAL += IVA;
-//
-//            //Se establecen los datos en la vista
-//            lblTotal.setText(TOTAL + "");
-//            lblIva.setText(IVA + "");
-//            model.addRow(row);
-//            tablaProductos.setModel(model);
+            //Se calcula el Subtotal, IVA y el precio final
+            SUBTOTAL += producto.getPrecio();
+            IVA = SUBTOTAL * 0.16;
+            TOTAL = SUBTOTAL + IVA;
+
+            //Se establecen los datos en la vista
+            lblSubtotal.setText(SUBTOTAL + "");
+            lblTotal.setText(TOTAL + "");
+            lblIva.setText(IVA + "");
+
             //Se limpia el campo de codigo de barras
             txtCodigo.setText("");
+            //Se reestablece el numero de productos por default
+            txtNumProductos.setText(1 + "");
         }
     }//GEN-LAST:event_txtCodigoActionPerformed
 
@@ -287,11 +308,13 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblIva;
+    private javax.swing.JLabel lblSubtotal;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JButton restarNumProductos;
     private javax.swing.JTable tablaProductos;
