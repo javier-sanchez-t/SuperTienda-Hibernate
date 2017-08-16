@@ -42,6 +42,17 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
         }
     }
 
+    public void limpiarCampos() {
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtTamano.setText("");
+        txtPrecio.setText("");
+        txtExistencia.setText("");
+        txtExistenciaMin.setText("");
+        comboCategoria.setSelectedIndex(0);
+        comboProveedor.setSelectedIndex(0);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,10 +73,12 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
         comboProveedor = new javax.swing.JComboBox<>();
         txtNombre = new javax.swing.JTextField();
         txtTamano = new javax.swing.JTextField();
-        txtPrecio = new javax.swing.JTextField();
-        txtExistenciaMin = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtExistencia = new javax.swing.JTextField();
+        txtExistenciaMin = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
 
@@ -100,6 +113,10 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
 
         jLabel7.setText("*Código:");
 
+        jLabel8.setText("*Existencia");
+
+        txtPrecio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -108,6 +125,7 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 17, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
@@ -115,20 +133,22 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel7)
-                                .addComponent(jLabel1)))
+                                .addComponent(jLabel1))
+                            .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(comboProveedor, 0, 181, Short.MAX_VALUE)
                             .addComponent(txtNombre)
                             .addComponent(txtTamano)
                             .addComponent(comboCategoria, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtCodigo)))
+                            .addComponent(txtCodigo)
+                            .addComponent(txtExistencia)
+                            .addComponent(txtPrecio)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtExistenciaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtExistenciaMin)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,6 +169,10 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -209,7 +233,7 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -223,33 +247,42 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
         String CODIGO = txtCodigo.getText().trim();
         String NOMBRE = txtNombre.getText().trim();
         String TAMANO = txtTamano.getText().trim();
-        int PRECIO = Integer.parseInt(txtPrecio.getText().trim());
-        int EXISTENCIA_MIN = Integer.parseInt(txtExistenciaMin.getText().trim());
+        String PRECIO_STRING = txtPrecio.getText().trim();
+        String EXISTENCIA_STRING = txtExistencia.getText().trim();
+        String EXISTENCIA_MIN_STRING = txtExistenciaMin.getText().trim();
         int CATEGORIA = comboCategoria.getSelectedIndex();
-        int PROVEEDR = comboProveedor.getSelectedIndex();
+        int PROVEEDOR = comboProveedor.getSelectedIndex();
 
-        if (!"".equals(CODIGO) && !"".equals(NOMBRE) && !"".equals(TAMANO) && PRECIO != 0 && EXISTENCIA_MIN != 0) {
+        if (!"".equals(CODIGO) && !"".equals(NOMBRE) && !"".equals(TAMANO) && !"".equals(PRECIO_STRING)
+                && !"".equals(EXISTENCIA_STRING) && !"".equals(EXISTENCIA_MIN_STRING)
+                && CATEGORIA != 0 && PROVEEDOR != 0) {
+            double PRECIO = Double.parseDouble(txtPrecio.getText().trim());
+            int EXISTENCIA = Integer.parseInt(txtExistencia.getText().trim());
+            int EXISTENCIA_MIN = Integer.parseInt(txtExistenciaMin.getText().trim());
+
             CategoriasProductos categoriaProducto = new CategoriasProductos();
             categoriaProducto = categoriasProductos.get(CATEGORIA - 1);
 
             Proveedores proveedor = new Proveedores();
-            proveedor = proveedores.get(PROVEEDR - 1);
-            
+            proveedor = proveedores.get(PROVEEDOR - 1);
+
             Productos producto = new Productos();
             producto.setProductoId(CODIGO);
             producto.setNombre(NOMBRE);
             producto.setTamano(TAMANO);
             producto.setPrecio(PRECIO);
+            producto.setExistencia(EXISTENCIA);
             producto.setExistenciaMin(EXISTENCIA_MIN);
             producto.setCategoriasProductos(categoriaProducto);
             producto.setProveedores(proveedor);
-            
-            if(dao.guardar(producto)){
+
+            if (dao.guardar(producto)) {
                 JOptionPane.showMessageDialog(this, "Producto registrado satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
-            }else{
+                limpiarCampos();
+            } else {
                 JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar el producto", "Error!", JOptionPane.ERROR_MESSAGE);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Ingrese los campos requeridos", "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -266,12 +299,14 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtExistencia;
     private javax.swing.JTextField txtExistenciaMin;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JFormattedTextField txtPrecio;
     private javax.swing.JTextField txtTamano;
     // End of variables declaration//GEN-END:variables
 }

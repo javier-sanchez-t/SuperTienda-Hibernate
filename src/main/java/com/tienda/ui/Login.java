@@ -39,8 +39,8 @@ public class Login extends javax.swing.JFrame {
         setTitle("Smart sell");
         
         //DATOS PRUEBA
-        txtUsuario.setText("jefe10jav@gmail.com");
-        txtContrasena.setText("jefe10jav@gmail.com85431");
+        txtUsuario.setText("victor10sistemas@gmail.com");
+        txtContrasena.setText("victor10sistemas@gmail.com19741");
 
         //Se cierra la sesión al cerrar la ventana
         this.addWindowListener(new WindowAdapter() {
@@ -181,6 +181,7 @@ public class Login extends javax.swing.JFrame {
 
         if (!"".equals(NOMBRE_USUARIO) && !"".equals(CONTRASENA)) {
             GenericDAO dao = new GenericDAOImpl(session);
+            System.out.println("Contrasena: "+Util.encriptarContrasena(CONTRASENA));
             Usuarios usuario = dao.login(NOMBRE_USUARIO, Util.encriptarContrasena(CONTRASENA));
 
             //Si el usuario obtenido es diferente de nulo, las credenciales son correctas

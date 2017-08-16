@@ -7,6 +7,8 @@ package com.tienda.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -37,5 +39,11 @@ public class Util {
             e.printStackTrace();
         }
         return generatedPassword;
+    }
+
+    public static String formatearFecha(Date fecha) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+        String date = sdf.format(fecha);
+        return date;
     }
 }

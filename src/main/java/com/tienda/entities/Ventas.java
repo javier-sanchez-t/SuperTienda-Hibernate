@@ -1,5 +1,5 @@
 package com.tienda.entities;
-// Generated 6/08/2017 10:25:16 PM by Hibernate Tools 4.3.1
+// Generated 12/08/2017 06:56:45 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,13 +13,13 @@ public class Ventas  implements java.io.Serializable {
      private int ventaId;
      private Productos productos;
      private Usuarios usuarios;
-     private int monto;
+     private double monto;
      private Date fecha;
 
     public Ventas() {
     }
 
-    public Ventas(int ventaId, Productos productos, Usuarios usuarios, int monto, Date fecha) {
+    public Ventas(int ventaId, Productos productos, Usuarios usuarios, double monto, Date fecha) {
        this.ventaId = ventaId;
        this.productos = productos;
        this.usuarios = usuarios;
@@ -48,11 +48,11 @@ public class Ventas  implements java.io.Serializable {
     public void setUsuarios(Usuarios usuarios) {
         this.usuarios = usuarios;
     }
-    public int getMonto() {
+    public double getMonto() {
         return this.monto;
     }
     
-    public void setMonto(int monto) {
+    public void setMonto(double monto) {
         this.monto = monto;
     }
     public Date getFecha() {

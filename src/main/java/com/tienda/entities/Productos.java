@@ -1,5 +1,5 @@
 package com.tienda.entities;
-// Generated 6/08/2017 10:25:16 PM by Hibernate Tools 4.3.1
+// Generated 12/08/2017 06:56:45 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -16,7 +16,7 @@ public class Productos  implements java.io.Serializable {
      private Proveedores proveedores;
      private String nombre;
      private String tamano;
-     private int precio;
+     private double precio;
      private int existencia;
      private int existenciaMin;
      private Set ventases = new HashSet(0);
@@ -25,7 +25,7 @@ public class Productos  implements java.io.Serializable {
     }
 
 	
-    public Productos(String productoId, CategoriasProductos categoriasProductos, Proveedores proveedores, String nombre, String tamano, int precio, int existencia, int existenciaMin) {
+    public Productos(String productoId, CategoriasProductos categoriasProductos, Proveedores proveedores, String nombre, String tamano, double precio, int existencia, int existenciaMin) {
         this.productoId = productoId;
         this.categoriasProductos = categoriasProductos;
         this.proveedores = proveedores;
@@ -35,7 +35,7 @@ public class Productos  implements java.io.Serializable {
         this.existencia = existencia;
         this.existenciaMin = existenciaMin;
     }
-    public Productos(String productoId, CategoriasProductos categoriasProductos, Proveedores proveedores, String nombre, String tamano, int precio, int existencia, int existenciaMin, Set ventases) {
+    public Productos(String productoId, CategoriasProductos categoriasProductos, Proveedores proveedores, String nombre, String tamano, double precio, int existencia, int existenciaMin, Set ventases) {
        this.productoId = productoId;
        this.categoriasProductos = categoriasProductos;
        this.proveedores = proveedores;
@@ -82,11 +82,11 @@ public class Productos  implements java.io.Serializable {
     public void setTamano(String tamano) {
         this.tamano = tamano;
     }
-    public int getPrecio() {
+    public double getPrecio() {
         return this.precio;
     }
     
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
     public int getExistencia() {
