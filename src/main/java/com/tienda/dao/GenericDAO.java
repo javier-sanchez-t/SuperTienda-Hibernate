@@ -35,6 +35,7 @@ public interface GenericDAO<T> {
     
     //Productos
     Productos buscarProductoPorCodigo(String codigo);
+    List<Productos> buscarTodosProductos();
     
     Session getSesion();
 }

@@ -10,8 +10,6 @@ import com.tienda.entities.Usuarios;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -72,6 +70,10 @@ public class Inicio extends javax.swing.JFrame {
         iMenuProveedores = new javax.swing.JMenuItem();
         iMenuCategorias = new javax.swing.JMenuItem();
         iMenuProductos = new javax.swing.JMenuItem();
+        menuReportes = new javax.swing.JMenu();
+        imenuProductosMasVendidos = new javax.swing.JMenuItem();
+        imenuEstadisticasDeVentas = new javax.swing.JMenuItem();
+        imenuVentasPorUsuario = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("FrameInicio"); // NOI18N
@@ -165,6 +167,27 @@ public class Inicio extends javax.swing.JFrame {
 
         Menus.add(menuAdministracion);
 
+        menuReportes.setText("Reportes");
+
+        imenuProductosMasVendidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        imenuProductosMasVendidos.setText("Productos más vendidos");
+        imenuProductosMasVendidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imenuProductosMasVendidosActionPerformed(evt);
+            }
+        });
+        menuReportes.add(imenuProductosMasVendidos);
+
+        imenuEstadisticasDeVentas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        imenuEstadisticasDeVentas.setText("Estadísticas de ventas");
+        menuReportes.add(imenuEstadisticasDeVentas);
+
+        imenuVentasPorUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        imenuVentasPorUsuario.setText("Ventas por usuario");
+        menuReportes.add(imenuVentasPorUsuario);
+
+        Menus.add(menuReportes);
+
         setJMenuBar(Menus);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,6 +239,12 @@ public class Inicio extends javax.swing.JFrame {
         PanelEscritorio.add(admin_cat_product);
         admin_cat_product.show();
     }//GEN-LAST:event_iMenuCategoriasActionPerformed
+
+    private void imenuProductosMasVendidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imenuProductosMasVendidosActionPerformed
+        ReporteProductosMasVendidos reporteProductosMasVendidos = new ReporteProductosMasVendidos(dao);
+        PanelEscritorio.add(reporteProductosMasVendidos);
+        reporteProductosMasVendidos.show();
+    }//GEN-LAST:event_imenuProductosMasVendidosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,10 +300,14 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem iMenuProductos;
     private javax.swing.JMenuItem iMenuProveedores;
     private javax.swing.JMenuItem iMenuRegistroVentas;
+    private javax.swing.JMenuItem imenuEstadisticasDeVentas;
+    private javax.swing.JMenuItem imenuProductosMasVendidos;
     private javax.swing.JMenuItem imenuUsuarios;
+    private javax.swing.JMenuItem imenuVentasPorUsuario;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu menuAdministracion;
     private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenu menuReportes;
     private javax.swing.JMenu menuVentas;
     // End of variables declaration//GEN-END:variables
 

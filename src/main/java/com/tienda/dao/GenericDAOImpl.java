@@ -41,7 +41,7 @@ public class GenericDAOImpl implements GenericDAO<Object> {
 
         try {
             transaction = getSesion().beginTransaction();
-            getSesion().saveOrUpdate(T);
+            getSesion().save(T);
             transaction.commit();
             guardado = true;
         } catch (HibernateException e) {
@@ -92,6 +92,11 @@ public class GenericDAOImpl implements GenericDAO<Object> {
                 .addEntity(Productos.class)
                 .setString(0, codigo).uniqueResult();
         return producto;
+    }
+    
+    @Override
+    public List<Productos> buscarTodosProductos(){
+        return getSesion().createCriteria(Productos.class).list();
     }
 
     /**
