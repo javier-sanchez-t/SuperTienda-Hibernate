@@ -7,6 +7,8 @@ package com.tienda.ui;
 
 import com.tienda.dao.GenericDAO;
 import com.tienda.entities.Productos;
+import com.tienda.entities.Ventas;
+import com.tienda.util.Util;
 import java.awt.BorderLayout;
 import java.util.List;
 import javax.swing.JLabel;
@@ -44,10 +46,11 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
         panelParametros = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
-        jXDatePicker3 = new org.jdesktop.swingx.JXDatePicker();
+        dateFechaFin = new org.jdesktop.swingx.JXDatePicker();
+        dateFechaInicio = new org.jdesktop.swingx.JXDatePicker();
         btnGenerarGrafico = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnHoy = new javax.swing.JButton();
         panelGrafico = new javax.swing.JPanel();
 
         setClosable(true);
@@ -71,6 +74,8 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
 
         btnCancelar.setText("Cancelar");
 
+        btnHoy.setText("Hoy");
+
         javax.swing.GroupLayout panelParametrosLayout = new javax.swing.GroupLayout(panelParametros);
         panelParametros.setLayout(panelParametrosLayout);
         panelParametrosLayout.setHorizontalGroup(
@@ -78,35 +83,40 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
             .addGroup(panelParametrosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelParametrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelParametrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jXDatePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                    .addComponent(jXDatePicker3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(79, 79, 79)
-                .addComponent(btnGenerarGrafico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar)
-                .addContainerGap(134, Short.MAX_VALUE))
+                    .addGroup(panelParametrosLayout.createSequentialGroup()
+                        .addGroup(panelParametrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelParametrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dateFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addComponent(dateFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(76, 76, 76)
+                        .addComponent(btnGenerarGrafico)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar))
+                    .addComponent(btnHoy, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
         panelParametrosLayout.setVerticalGroup(
             panelParametrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelParametrosLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
+                .addComponent(btnHoy)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelParametrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jXDatePicker3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelParametrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGenerarGrafico)
                     .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        panelGrafico.setLayout(new java.awt.GridLayout());
+        panelGrafico.setLayout(new java.awt.GridLayout(1, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,6 +137,7 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGenerarGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarGraficoActionPerformed
+                
         panelGrafico.removeAll();
         panelGrafico.revalidate();
         panelGrafico.repaint();
@@ -140,7 +151,12 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
         for(Productos producto: productos){
             data.setValue(producto.getNombre(), 1);
         }
-
+        
+        List<Ventas> ventas = dao.buscarVentasEntreFechas(Util.formatearFecha(dateFechaInicio.getDate()), Util.formatearFecha(dateFechaFin.getDate()));
+        for(Ventas venta: ventas){
+            System.out.println("======>"+venta.getFecha());
+        }
+        
         // Creando el Grafico
         JFreeChart chart = ChartFactory.createPieChart(
                 "Productos vendidos",
@@ -160,11 +176,12 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGenerarGrafico;
+    private javax.swing.JButton btnHoy;
+    private org.jdesktop.swingx.JXDatePicker dateFechaFin;
+    private org.jdesktop.swingx.JXDatePicker dateFechaInicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker2;
-    private org.jdesktop.swingx.JXDatePicker jXDatePicker3;
     private javax.swing.JPanel panelGrafico;
     private javax.swing.JPanel panelParametros;
     // End of variables declaration//GEN-END:variables

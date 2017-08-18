@@ -10,6 +10,7 @@ import com.tienda.entities.Productos;
 import com.tienda.entities.Proveedores;
 import com.tienda.entities.TiposUsuarios;
 import com.tienda.entities.Usuarios;
+import com.tienda.entities.Ventas;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -93,10 +94,17 @@ public class GenericDAOImpl implements GenericDAO<Object> {
                 .setString(0, codigo).uniqueResult();
         return producto;
     }
-    
+
     @Override
-    public List<Productos> buscarTodosProductos(){
+    public List<Productos> buscarTodosProductos() {
         return getSesion().createCriteria(Productos.class).list();
+    }
+
+    @Override
+    public List<Ventas> buscarVentasEntreFechas(String fechaInicio, String fechaFin) {
+        List<Ventas> ventas = getSesion().createSQLQuery("SELECT * FROM ventas WHERE fecha BETWEEN '"+fechaInicio+"' AND '"+fechaFin+"';")
+                .addEntity(Ventas.class).list();
+        return ventas;
     }
 
     /**
