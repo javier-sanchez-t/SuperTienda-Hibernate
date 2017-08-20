@@ -52,7 +52,7 @@ public class GenericDAOImpl implements GenericDAO<Object> {
             e.printStackTrace();
             guardado = false;
         }
-       
+
         return guardado;
     }
 
@@ -93,9 +93,9 @@ public class GenericDAOImpl implements GenericDAO<Object> {
                 .addEntity(Usuarios.class).list();
         return usuarios;
     }
-    
+
     @Override
-    public Usuarios buscarUsuarioPorId(int usuarioId){
+    public Usuarios buscarUsuarioPorId(int usuarioId) {
         Usuarios usuario = (Usuarios) getSesion().createSQLQuery("SELECT * FROM usuarios WHERE usuario_id=?")
                 .addEntity(Usuarios.class)
                 .setInteger(0, usuarioId).uniqueResult();
@@ -128,6 +128,16 @@ public class GenericDAOImpl implements GenericDAO<Object> {
     @Override
     public List<Productos> buscarTodosProductos() {
         return getSesion().createCriteria(Productos.class).list();
+    }
+
+    @Override
+    public int actualizarExistenciaProducto(String productoId, int numProductos) {
+        Transaction transaction = null;
+        transaction = getSesion().beginTransaction();
+        int actualizado = getSesion().createSQLQuery("UPDATE productos SET existencia=existencia-" + numProductos + " WHERE producto_id='" + productoId + "'")
+                .executeUpdate();
+        transaction.commit();
+        return actualizado;
     }
 
     @Override

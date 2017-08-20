@@ -349,7 +349,18 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
             venta.setUsuarios(usuario);
 
             //Se guarda la venta
-            if (dao.guardar(venta) == false) {
+            if (dao.guardar(venta)) {
+                //Se disminuye la existencia del producto
+                dao.actualizarExistenciaProducto(productoId, numProductos);
+                
+//                //Se envia el mensaje si la existencia es menor o igual a la cantidad minima
+//                Productos productoEvaluado = dao.buscarProductoPorCodigo(productoId);
+//                if (productoEvaluado.getExistencia() <= productoEvaluado.getExistenciaMin()) {
+//                    System.out.println("ESCASES DE PRODUCTO ===========>>");
+//                    System.out.println("Proveedor: "+productoEvaluado.getProveedores().getNombre());
+//                    System.out.println("Telefono: "+productoEvaluado.getProveedores().getNombre());
+//                }
+            } else {
                 ventaGuardada = false;
                 break;
             }
