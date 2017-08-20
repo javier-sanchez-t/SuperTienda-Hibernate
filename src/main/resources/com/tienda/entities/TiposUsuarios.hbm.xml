@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 12/08/2017 06:56:47 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 19/08/2017 08:06:52 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="com.tienda.entities.TiposUsuarios" table="tipos_usuarios" schema="public" optimistic-lock="version">
         <id name="tipoUsuarioId" type="int">
             <column name="tipo_usuario_id" />
-            <generator class="assigned" />
+            <generator class="identity"/>
         </id>
         <property name="nombre" type="string">
             <column name="nombre" not-null="true" />

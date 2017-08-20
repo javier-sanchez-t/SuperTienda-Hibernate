@@ -1,5 +1,5 @@
 package com.tienda.entities;
-// Generated 12/08/2017 06:56:45 PM by Hibernate Tools 4.3.1
+// Generated 19/08/2017 08:06:52 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;

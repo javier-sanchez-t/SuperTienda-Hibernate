@@ -1,5 +1,5 @@
 package com.tienda.entities;
-// Generated 12/08/2017 06:56:45 PM by Hibernate Tools 4.3.1
+// Generated 19/08/2017 08:06:52 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,6 +14,7 @@ public class Proveedores  implements java.io.Serializable {
      private int proveedorId;
      private String nombre;
      private String email;
+     private String telefono;
      private boolean notificacion;
      private Set productoses = new HashSet(0);
 
@@ -21,16 +22,18 @@ public class Proveedores  implements java.io.Serializable {
     }
 
 	
-    public Proveedores(int proveedorId, String nombre, String email, boolean notificacion) {
+    public Proveedores(int proveedorId, String nombre, String email, String telefono, boolean notificacion) {
         this.proveedorId = proveedorId;
         this.nombre = nombre;
         this.email = email;
+        this.telefono = telefono;
         this.notificacion = notificacion;
     }
-    public Proveedores(int proveedorId, String nombre, String email, boolean notificacion, Set productoses) {
+    public Proveedores(int proveedorId, String nombre, String email, String telefono, boolean notificacion, Set productoses) {
        this.proveedorId = proveedorId;
        this.nombre = nombre;
        this.email = email;
+       this.telefono = telefono;
        this.notificacion = notificacion;
        this.productoses = productoses;
     }
@@ -55,6 +58,13 @@ public class Proveedores  implements java.io.Serializable {
     
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getTelefono() {
+        return this.telefono;
+    }
+    
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
     public boolean isNotificacion() {
         return this.notificacion;
