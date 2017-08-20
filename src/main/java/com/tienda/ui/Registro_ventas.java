@@ -10,7 +10,9 @@ import com.tienda.entities.Productos;
 import com.tienda.entities.Usuarios;
 import com.tienda.entities.Ventas;
 import com.tienda.util.Util;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -329,6 +331,7 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_restarNumProductosActionPerformed
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+        List<Productos> productosVendidos = new ArrayList<>();
         boolean ventaGuardada = true;
 
         for (int i = 0; i < model.getRowCount(); i++) {
@@ -352,17 +355,26 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
             if (dao.guardar(venta)) {
                 //Se disminuye la existencia del producto
                 dao.actualizarExistenciaProducto(productoId, numProductos);
-                
-//                //Se envia el mensaje si la existencia es menor o igual a la cantidad minima
-//                Productos productoEvaluado = dao.buscarProductoPorCodigo(productoId);
-//                if (productoEvaluado.getExistencia() <= productoEvaluado.getExistenciaMin()) {
-//                    System.out.println("ESCASES DE PRODUCTO ===========>>");
-//                    System.out.println("Proveedor: "+productoEvaluado.getProveedores().getNombre());
-//                    System.out.println("Telefono: "+productoEvaluado.getProveedores().getNombre());
-//                }
+
+                //Se agrega el producto a la lista de productos vendidos
+                if (!productosVendidos.contains(producto)) {
+                    productosVendidos.add(producto);
+                }
+
             } else {
                 ventaGuardada = false;
                 break;
+            }
+        }
+
+        //Se evalúa la existencia del producto
+        for (Productos product : productosVendidos) {
+            Productos productoVendido = dao.buscarProductoPorCodigo(product.getProductoId());
+            //Si el producto existente es menor al minimo se envia mensaje SMS
+            if (productoVendido.getExistencia() <= productoVendido.getExistenciaMin()) {
+                System.out.println("Producto con escasez, ENVIANDO SMS ==============>");
+                System.out.println("Proveedor: " + productoVendido.getProveedores().getNombre());
+                System.out.println("Telefono: " + productoVendido.getProveedores().getTelefono());
             }
         }
 

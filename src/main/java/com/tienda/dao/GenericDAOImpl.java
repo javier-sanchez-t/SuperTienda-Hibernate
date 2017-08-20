@@ -131,13 +131,10 @@ public class GenericDAOImpl implements GenericDAO<Object> {
     }
 
     @Override
-    public int actualizarExistenciaProducto(String productoId, int numProductos) {
-        Transaction transaction = null;
-        transaction = getSesion().beginTransaction();
-        int actualizado = getSesion().createSQLQuery("UPDATE productos SET existencia=existencia-" + numProductos + " WHERE producto_id='" + productoId + "'")
-                .executeUpdate();
-        transaction.commit();
-        return actualizado;
+    public void actualizarExistenciaProducto(String productoId, int numProductos) {
+        Productos producto = buscarProductoPorCodigo(productoId);
+        producto.setExistencia(producto.getExistencia()-numProductos);
+        guardar(producto);
     }
 
     @Override
