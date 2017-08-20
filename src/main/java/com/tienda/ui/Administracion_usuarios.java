@@ -11,13 +11,11 @@ import com.tienda.entities.Usuarios;
 import com.tienda.util.CorreoUtil;
 import com.tienda.util.StaticConstans;
 import com.tienda.util.Util;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.security.MessageDigest;
 import java.util.List;
 import java.util.Random;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,12 +44,37 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
         }
 
         //Se establecen los titulos de la tabla
-        String titulos[] = {"Usuario Id", "Nom. Usuario", "Nombre", "Ap. Paterno", "Ap. Materno", "Tipo usuario"};
-        model = new DefaultTableModel(null, titulos);
-        tablaUsuarios.setModel(model);
+        String titulos[] = {"Usuario Id", "Nombre de usuario", "Nombre", "Ap. Paterno", "Ap. Materno", "Tipo usuario"};
+        model = new DefaultTableModel(null, titulos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tabla.setModel(model);
+
+        //Se agrega el listener para clic sobre la tabla
+        tabla.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                int filaSeleccionada = tabla.getSelectedRow();
+                if (filaSeleccionada > -1) {
+                    lblUsuarioId.setText(model.getValueAt(filaSeleccionada, 0).toString());
+                    txtEmail.setText(model.getValueAt(filaSeleccionada, 1).toString());
+                    txtNombre.setText(model.getValueAt(filaSeleccionada, 2).toString());
+                    txtApellidoP.setText(model.getValueAt(filaSeleccionada, 3).toString());
+                    txtApellidoM.setText(model.getValueAt(filaSeleccionada, 4).toString());
+                    comboTiposUsuarios.setSelectedItem(model.getValueAt(filaSeleccionada, 5).toString());
+                }
+            }
+        });
+
+        //Usuario id es nulo
+        lblUsuarioId.setText("Nuevo");
     }
 
     public void limpiarCampos() {
+        lblUsuarioId.setText("Nuevo");
         txtEmail.setText("");
         txtNombre.setText("");
         txtApellidoP.setText("");
@@ -79,14 +102,16 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
         txtApellidoP = new javax.swing.JTextField();
         txtApellidoM = new javax.swing.JTextField();
         comboTiposUsuarios = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        lblUsuarioId = new javax.swing.JLabel();
         opciones = new javax.swing.JPanel();
+        btnNuevo = new javax.swing.JButton();
         btnguardar = new javax.swing.JButton();
-        btnactualizar = new javax.swing.JButton();
-        btncancelar = new javax.swing.JButton();
-        btnsalir = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaUsuarios = new javax.swing.JTable();
+        btnsalir = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -108,6 +133,10 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
 
         comboTiposUsuarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccionar ---" }));
 
+        jLabel6.setText("Usuario id:");
+
+        lblUsuarioId.setText("usuarioId");
+
         javax.swing.GroupLayout detalle_admin_usuariosLayout = new javax.swing.GroupLayout(detalle_admin_usuarios);
         detalle_admin_usuarios.setLayout(detalle_admin_usuariosLayout);
         detalle_admin_usuariosLayout.setHorizontalGroup(
@@ -115,29 +144,39 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
             .addGroup(detalle_admin_usuariosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4))
-                .addGroup(detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(detalle_admin_usuariosLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
                         .addGroup(detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEmail)
-                            .addComponent(txtNombre)))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
+                        .addGroup(detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(detalle_admin_usuariosLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtApellidoP)
+                                    .addComponent(txtApellidoM)
+                                    .addComponent(comboTiposUsuarios, 0, 180, Short.MAX_VALUE)))
+                            .addGroup(detalle_admin_usuariosLayout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addGroup(detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtEmail)
+                                    .addComponent(txtNombre)
+                                    .addComponent(lblUsuarioId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(detalle_admin_usuariosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtApellidoP)
-                            .addComponent(txtApellidoM)
-                            .addComponent(comboTiposUsuarios, 0, 180, Short.MAX_VALUE))))
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         detalle_admin_usuariosLayout.setVerticalGroup(
             detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detalle_admin_usuariosLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
+                .addGroup(detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lblUsuarioId))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -157,10 +196,18 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
                 .addGroup(detalle_admin_usuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(comboTiposUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         opciones.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones"));
+
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/new.png"))); // NOI18N
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnguardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/save.png"))); // NOI18N
         btnguardar.setText("Guardar");
@@ -170,26 +217,11 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
             }
         });
 
-        btnactualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/update.png"))); // NOI18N
-        btnactualizar.setText("Actualizar");
-        btnactualizar.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/update.png"))); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnactualizarActionPerformed(evt);
-            }
-        });
-
-        btncancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/cancel.png"))); // NOI18N
-        btncancelar.setText("Cancelar");
-        btncancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncancelarActionPerformed(evt);
-            }
-        });
-
-        btnsalir.setText("Salir");
-        btnsalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsalirActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -201,48 +233,46 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
             }
         });
 
+        btnsalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/exit.png"))); // NOI18N
+        btnsalir.setText("Salir");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout opcionesLayout = new javax.swing.GroupLayout(opciones);
         opciones.setLayout(opcionesLayout);
         opcionesLayout.setHorizontalGroup(
             opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(opcionesLayout.createSequentialGroup()
-                .addGroup(opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(opcionesLayout.createSequentialGroup()
-                        .addGroup(opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(opcionesLayout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addGroup(opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnactualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnguardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(opcionesLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(opcionesLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(opcionesLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addContainerGap()
+                .addGroup(opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnguardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnsalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         opcionesLayout.setVerticalGroup(
             opcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(opcionesLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(btnNuevo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnguardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnactualizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnActualizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btncancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnsalir)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -253,8 +283,7 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tablaUsuarios.setEnabled(false);
-        jScrollPane1.setViewportView(tablaUsuarios);
+        jScrollPane2.setViewportView(tabla);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -262,13 +291,11 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(detalle_admin_usuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(opciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 156, Short.MAX_VALUE)))
+                .addComponent(detalle_admin_usuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(opciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -276,10 +303,9 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(opciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(detalle_admin_usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(opciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -337,13 +363,54 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnguardarActionPerformed
 
-    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        if(lblUsuarioId.getText().equals("Nuevo")){
+            JOptionPane.showMessageDialog(this, "Este es un nuevo registro, utilice el botón 'Guardar'", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        String EMAIL = txtEmail.getText().trim();
+        String NOMBRE = txtNombre.getText().trim();
+        String APELLIDO_P = txtApellidoP.getText().trim();
+        String APELLIDO_M = txtApellidoM.getText().trim();
+        int TIPO_USUARIO = comboTiposUsuarios.getSelectedIndex();
 
-    }//GEN-LAST:event_btnactualizarActionPerformed
+        if (!"".equals(EMAIL) && !"".equals(NOMBRE) && !"".equals(APELLIDO_P) && !"".equals(APELLIDO_M) && TIPO_USUARIO != 0) {
+            //Se valida el email
+            if (CorreoUtil.validarEmail(EMAIL)) {
+                TiposUsuarios tipoUsuario = new TiposUsuarios();
+                tipoUsuario = tiposUsuarios.get(comboTiposUsuarios.getSelectedIndex() - 1);
 
-    private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
+                Usuarios usuario = dao.buscarUsuarioPorId(Integer.parseInt(lblUsuarioId.getText()));
+                //usuario.setUsuarioId(Integer.parseInt(lblUsuarioId.getText()));
+                System.out.println("Usuario id:" + usuario.getUsuarioId());
+                usuario.setNombreUsuario(EMAIL);
+                usuario.setNombre(NOMBRE);
+                usuario.setApellidoP(APELLIDO_P);
+                usuario.setApellidoM(APELLIDO_M);
+                usuario.setTiposUsuarios(tipoUsuario);
+
+                //Se guarda al usuario
+                if (dao.guardar(usuario)) {
+                    JOptionPane.showMessageDialog(this, "Usuario actualizado satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar al usuario", "Error!", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Ingrese un email valido", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese los campos requeridos", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        btnBuscarActionPerformed(evt);
         limpiarCampos();
-    }//GEN-LAST:event_btncancelarActionPerformed
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
         // TODO add your handling code here:
@@ -390,16 +457,16 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
             u[4] = usuario.getApellidoM();
             u[5] = usuario.getTiposUsuarios().getNombre();
             model.addRow(u);
-            tablaUsuarios.setModel(model);
+            tabla.setModel(model);
         }
-        
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnactualizar;
-    private javax.swing.JButton btncancelar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnsalir;
     private javax.swing.JComboBox<String> comboTiposUsuarios;
@@ -409,9 +476,11 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblUsuarioId;
     private javax.swing.JPanel opciones;
-    private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTable tabla;
     private javax.swing.JTextField txtApellidoM;
     private javax.swing.JTextField txtApellidoP;
     private javax.swing.JTextField txtEmail;

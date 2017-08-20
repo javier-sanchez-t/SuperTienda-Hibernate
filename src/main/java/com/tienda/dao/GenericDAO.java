@@ -22,10 +22,14 @@ public interface GenericDAO<T> {
 
     boolean guardar(Object T);
 
+    boolean actualizar(Object T);
+
     //Usuarios
     Usuarios login(String nombre_usuario, String contrasena);
 
     List<Usuarios> buscarUsuarios(String parametros);
+
+    Usuarios buscarUsuarioPorId(int usuarioId);
 
     //Tipos usuarios
     List<TiposUsuarios> buscarTodosTiposUsuarios();

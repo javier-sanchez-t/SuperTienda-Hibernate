@@ -52,6 +52,28 @@ public class GenericDAOImpl implements GenericDAO<Object> {
             e.printStackTrace();
             guardado = false;
         }
+       
+        return guardado;
+    }
+
+    @Override
+    public boolean actualizar(Object T) {
+        //Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        boolean guardado = false;
+
+        try {
+            transaction = getSesion().beginTransaction();
+            getSesion().update(T);
+            transaction.commit();
+            guardado = true;
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            guardado = false;
+        }
 
         return guardado;
     }
@@ -70,6 +92,14 @@ public class GenericDAOImpl implements GenericDAO<Object> {
         List<Usuarios> usuarios = (List<Usuarios>) getSesion().createSQLQuery("SELECT * FROM usuarios" + parametros)
                 .addEntity(Usuarios.class).list();
         return usuarios;
+    }
+    
+    @Override
+    public Usuarios buscarUsuarioPorId(int usuarioId){
+        Usuarios usuario = (Usuarios) getSesion().createSQLQuery("SELECT * FROM usuarios WHERE usuario_id=?")
+                .addEntity(Usuarios.class)
+                .setInteger(0, usuarioId).uniqueResult();
+        return usuario;
     }
 
     @Override
@@ -102,7 +132,7 @@ public class GenericDAOImpl implements GenericDAO<Object> {
 
     @Override
     public List<Ventas> buscarVentasEntreFechas(String fechaInicio, String fechaFin) {
-        List<Ventas> ventas = getSesion().createSQLQuery("SELECT * FROM ventas WHERE fecha BETWEEN '"+fechaInicio+"' AND '"+fechaFin+"';")
+        List<Ventas> ventas = getSesion().createSQLQuery("SELECT * FROM ventas WHERE fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "';")
                 .addEntity(Ventas.class).list();
         return ventas;
     }

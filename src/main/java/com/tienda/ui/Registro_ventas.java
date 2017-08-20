@@ -306,12 +306,14 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
             lblSubtotal.setText(SUBTOTAL + "");
             lblTotal.setText(TOTAL + "");
             lblIva.setText(IVA + "");
-
-            //Se limpia el campo de codigo de barras
-            txtCodigo.setText("");
-            //Se reestablece el numero de productos por default
-            txtNumProductos.setText(1 + "");
+        } else {
+            JOptionPane.showMessageDialog(this, "Producto no encontrado", "Error!", JOptionPane.ERROR_MESSAGE);
         }
+
+        //Se limpia el campo de codigo de barras
+        txtCodigo.setText("");
+        //Se reestablece el numero de productos por default
+        txtNumProductos.setText(1 + "");
     }//GEN-LAST:event_txtCodigoActionPerformed
 
     private void btnSumarNumProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSumarNumProductosActionPerformed
