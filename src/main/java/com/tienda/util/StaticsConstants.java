@@ -10,6 +10,8 @@ package com.tienda.util;
  * @author MBN USER
  */
 public class StaticsConstants {
+    public static boolean NOTIFICAR_CON_SMS = false;
+    
     //Configuration of SMS
     public static String TELEPHONE_NUMBER_SERVER = "+14157921150";
     public static String ACCOUNT_SID = "AC81f53a22ad9741db3f3fa3b35b5ef23c";
@@ -17,4 +19,6 @@ public class StaticsConstants {
     
     public static String TIENDA = "Tienda, Tres hermanos";
     public static String DIRECCION = "Calle Juárez No.5 Nanacamilpa, Tlaxcala";
+    
+    public static String CODIGO_PAIS = "+52";
 }

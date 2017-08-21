@@ -392,9 +392,9 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
                             + "\nAtte." + StaticsConstants.TIENDA;
                     System.out.println(MENSAJE);
                     //Se envia SMS
-                    //if (SendSMSUtil.enviarSMS(NUM_TELEFONO, MENSAJE)) {
+                    if (SendSMSUtil.enviarSMS(StaticsConstants.CODIGO_PAIS + NUM_TELEFONO, MENSAJE) && StaticsConstants.NOTIFICAR_CON_SMS) {
                         NOTIFICACION_ENVIADA = "\n\nNOTA: Se han enviado algunas notificaciones\n a los proveedores debido a escases de productos.";
-                    //};
+                    };
                 }
             }
         }
