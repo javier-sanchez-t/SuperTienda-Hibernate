@@ -289,6 +289,7 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
         //Se consulta el producto
         Productos producto = dao.buscarProductoPorCodigo(CODIGO);
         if (producto != null) {
+            SUBTOTAL = 0;
 
             //Se evalua la disponibilidad del producto
             if (NUM_PRODUCTOS > producto.getExistencia()) {
