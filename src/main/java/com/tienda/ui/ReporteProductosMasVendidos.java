@@ -5,12 +5,25 @@
  */
 package com.tienda.ui;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.DefaultFontMapper;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfTemplate;
+import com.lowagie.text.pdf.PdfWriter;
 import com.tienda.dao.GenericDAO;
 import com.tienda.entities.Productos;
 import com.tienda.entities.Ventas;
+import com.tienda.util.PDFUtil;
 import com.tienda.util.Util;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -21,10 +34,10 @@ import org.jfree.data.general.DefaultPieDataset;
  * @author MBN USER
  */
 public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
-    
+
     private GenericDAO dao;
-    
-    
+    JFreeChart chart;
+
     public ReporteProductosMasVendidos(GenericDAO dao) {
         initComponents();
 
@@ -83,6 +96,11 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
 
         btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/pdf .png"))); // NOI18N
         btnPDF.setText("Generar PDF");
+        btnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPDFActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelParametrosLayout = new javax.swing.GroupLayout(panelParametros);
         panelParametros.setLayout(panelParametrosLayout);
@@ -141,12 +159,17 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGenerarGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarGraficoActionPerformed
+        if (dateFechaInicio.getDate() == null || dateFechaFin.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Ingrese la fecha de inicio y fin de reporte", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         btnPDF.setEnabled(true);
-        
+
         panelGrafico.removeAll();
         panelGrafico.revalidate();
         panelGrafico.repaint();
-        
+
         this.setSize(850, 550);
 
         //Se crea una nueva lista con productos del inventario
@@ -171,11 +194,11 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
         // Fuente de Datos
         DefaultPieDataset data = new DefaultPieDataset();
         for (Ventas v : resumenVentas) {
-            data.setValue(v.getProductos().getNombre()+" - $"+v.getMonto(), v.getMonto());
+            data.setValue(v.getProductos().getNombre() + " - $" + v.getMonto(), v.getMonto());
         }
 
         // Creando el Grafico
-        JFreeChart chart = ChartFactory.createPieChart(
+        chart = ChartFactory.createPieChart(
                 "Productos vendidos",
                 data,
                 true,
@@ -193,6 +216,17 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Seleccionar destino");
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            PDFUtil.crearGraficaPDF(fileToSave.getAbsolutePath() + ".pdf", chart);
+        }
+
+    }//GEN-LAST:event_btnPDFActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

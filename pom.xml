@@ -58,6 +58,12 @@
             <artifactId>jfreechart</artifactId>
             <version>1.0.19</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.lowagie/itext -->
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.7</version>
+        </dependency>
         <dependency>
             <groupId>unknown.binary</groupId>
             <artifactId>swingx-all-1.6.4</artifactId>
