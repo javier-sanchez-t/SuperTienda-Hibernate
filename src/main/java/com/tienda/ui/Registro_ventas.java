@@ -9,6 +9,8 @@ import com.tienda.dao.GenericDAO;
 import com.tienda.entities.Productos;
 import com.tienda.entities.Usuarios;
 import com.tienda.entities.Ventas;
+import com.tienda.util.SendSMSUtil;
+import com.tienda.util.StaticsConstants;
 import com.tienda.util.Util;
 import java.util.ArrayList;
 import java.util.Date;
@@ -123,6 +125,11 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/multiply.png"))); // NOI18N
 
         txtNumProductos.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        txtNumProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumProductosActionPerformed(evt);
+            }
+        });
 
         btnSumarNumProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/plus.png"))); // NOI18N
         btnSumarNumProductos.addActionListener(new java.awt.event.ActionListener() {
@@ -277,18 +284,17 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
 
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         CODIGO = txtCodigo.getText().trim();
+        NUM_PRODUCTOS = Integer.parseInt(txtNumProductos.getText().trim());
 
         //Se consulta el producto
         Productos producto = dao.buscarProductoPorCodigo(CODIGO);
         if (producto != null) {
-            /*
-            for (int row = 0; row < model.getRowCount(); row++) {
-                String CODIGO_REGISTRADO = model.getValueAt(row, 0).toString();
-                if(){
-                    
-                }
+
+            //Se evalua la disponibilidad del producto
+            if (NUM_PRODUCTOS > producto.getExistencia()) {
+                JOptionPane.showMessageDialog(this, "No hay producto suficiente para vender " + NUM_PRODUCTOS + " " + producto.getNombre(), "Error!", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-             */
 
             Object[] row = new Object[5];
             row[0] = producto.getProductoId();
@@ -300,7 +306,12 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
             tablaProductos.setModel(model);
 
             //Se calcula el Subtotal, IVA y el precio final
-            SUBTOTAL += producto.getPrecio();
+            for (int fila = 0; fila < model.getRowCount(); fila++) {
+                int numProducto = Integer.parseInt(model.getValueAt(fila, 1).toString());
+                double precioProducto = Double.parseDouble(model.getValueAt(fila, 4).toString());
+                SUBTOTAL += precioProducto * numProducto;
+            }
+            //SUBTOTAL += producto.getPrecio() * NUM_PRODUCTOS;
             IVA = SUBTOTAL * 0.16;
             TOTAL = SUBTOTAL + IVA;
 
@@ -367,19 +378,29 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
             }
         }
 
+        String NOTIFICACION_ENVIADA = "";
         //Se evalúa la existencia del producto
         for (Productos product : productosVendidos) {
             Productos productoVendido = dao.buscarProductoPorCodigo(product.getProductoId());
             //Si el producto existente es menor al minimo se envia mensaje SMS
             if (productoVendido.getExistencia() <= productoVendido.getExistenciaMin()) {
-                System.out.println("Producto con escasez, ENVIANDO SMS ==============>");
-                System.out.println("Proveedor: " + productoVendido.getProveedores().getNombre());
-                System.out.println("Telefono: " + productoVendido.getProveedores().getTelefono());
+                if (productoVendido.getProveedores().isNotificacion()) {
+                    String NUM_TELEFONO = productoVendido.getProveedores().getTelefono();
+                    String MENSAJE = "Estimado proveedor, requerimos " + productoVendido.getCantidadSolicitada()
+                            + " unidades del producto: " + productoVendido.getNombre() + " de " + productoVendido.getTamano()
+                            + "\nDirección: " + StaticsConstants.DIRECCION
+                            + "\nAtte." + StaticsConstants.TIENDA;
+                    System.out.println(MENSAJE);
+                    //Se envia SMS
+                    //if (SendSMSUtil.enviarSMS(NUM_TELEFONO, MENSAJE)) {
+                        NOTIFICACION_ENVIADA = "\n\nNOTA: Se han enviado algunas notificaciones\n a los proveedores debido a escases de productos.";
+                    //};
+                }
             }
         }
 
         if (ventaGuardada) {
-            JOptionPane.showMessageDialog(this, "Venta registrada satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Venta registrada satisfactoriamente!" + NOTIFICACION_ENVIADA, "Éxito!", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar la venta", "Error!", JOptionPane.ERROR_MESSAGE);
         }
@@ -387,6 +408,10 @@ public class Registro_ventas extends javax.swing.JInternalFrame {
         //Se limpian los datos del formulario
         limpiarFormulario();
     }//GEN-LAST:event_btnVenderActionPerformed
+
+    private void txtNumProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumProductosActionPerformed
+        txtCodigoActionPerformed(evt);
+    }//GEN-LAST:event_txtNumProductosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSumarNumProductos;

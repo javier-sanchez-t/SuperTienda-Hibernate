@@ -121,7 +121,7 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="checkNotificacion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Notificaci&#xf3;n autom&#xe1;tica"/>
+            <Property name="text" type="java.lang.String" value="Notificaci&#xf3;n SMS"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">

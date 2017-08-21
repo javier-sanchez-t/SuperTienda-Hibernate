@@ -66,7 +66,7 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
 
         jLabel2.setText("*Email:");
 
-        checkNotificacion.setText("Notificación automática");
+        checkNotificacion.setText("Notificación SMS");
 
         jLabel3.setText("*Teléfono:");
 

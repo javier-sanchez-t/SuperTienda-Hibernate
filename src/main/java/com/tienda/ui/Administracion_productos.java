@@ -49,6 +49,7 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
         txtPrecio.setText("");
         txtExistencia.setText("");
         txtExistenciaMin.setText("");
+        txtCantidadSolicitada.setText("");
         comboCategoria.setSelectedIndex(0);
         comboProveedor.setSelectedIndex(0);
     }
@@ -79,6 +80,8 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
         txtExistencia = new javax.swing.JTextField();
         txtExistenciaMin = new javax.swing.JTextField();
         txtPrecio = new javax.swing.JFormattedTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtCantidadSolicitada = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
 
@@ -117,37 +120,36 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
 
         txtPrecio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
+        jLabel9.setText("Cantidad a solicitar:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 17, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel1))
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(comboProveedor, 0, 181, Short.MAX_VALUE)
-                            .addComponent(txtNombre)
-                            .addComponent(txtTamano)
-                            .addComponent(comboCategoria, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCodigo)
-                            .addComponent(txtExistencia)
-                            .addComponent(txtPrecio)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtExistenciaMin)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtExistenciaMin)
+                    .addComponent(comboProveedor, javax.swing.GroupLayout.Alignment.LEADING, 0, 181, Short.MAX_VALUE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTamano, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtExistencia, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCantidadSolicitada))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -179,13 +181,17 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
                     .addComponent(txtExistenciaMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtCantidadSolicitada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(comboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones"));
@@ -222,9 +228,9 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(76, 76, 76)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,7 +239,7 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -250,15 +256,17 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
         String PRECIO_STRING = txtPrecio.getText().trim();
         String EXISTENCIA_STRING = txtExistencia.getText().trim();
         String EXISTENCIA_MIN_STRING = txtExistenciaMin.getText().trim();
+        String CANTIDAD_A_SOLICITAR = txtCantidadSolicitada.getText().trim();
         int CATEGORIA = comboCategoria.getSelectedIndex();
         int PROVEEDOR = comboProveedor.getSelectedIndex();
 
         if (!"".equals(CODIGO) && !"".equals(NOMBRE) && !"".equals(TAMANO) && !"".equals(PRECIO_STRING)
-                && !"".equals(EXISTENCIA_STRING) && !"".equals(EXISTENCIA_MIN_STRING)
+                && !"".equals(EXISTENCIA_STRING) && !"".equals(EXISTENCIA_MIN_STRING) && !"".equals(CANTIDAD_A_SOLICITAR)
                 && CATEGORIA != 0 && PROVEEDOR != 0) {
             double PRECIO = Double.parseDouble(txtPrecio.getText().trim());
             int EXISTENCIA = Integer.parseInt(txtExistencia.getText().trim());
             int EXISTENCIA_MIN = Integer.parseInt(txtExistenciaMin.getText().trim());
+            int CANT_A_SOLCITAR = Integer.parseInt(CANTIDAD_A_SOLICITAR);
 
             CategoriasProductos categoriaProducto = new CategoriasProductos();
             categoriaProducto = categoriasProductos.get(CATEGORIA - 1);
@@ -275,6 +283,7 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
             producto.setExistenciaMin(EXISTENCIA_MIN);
             producto.setCategoriasProductos(categoriaProducto);
             producto.setProveedores(proveedor);
+            producto.setCantidadSolicitada(CANT_A_SOLCITAR);
 
             if (dao.guardar(producto)) {
                 JOptionPane.showMessageDialog(this, "Producto registrado satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
@@ -300,8 +309,10 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField txtCantidadSolicitada;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtExistencia;
     private javax.swing.JTextField txtExistenciaMin;

@@ -15,17 +15,13 @@ import com.twilio.type.PhoneNumber;
  */
 public class SendSMSUtil {
 
-    public boolean enviarSMS(String numero) {
+    public static boolean enviarSMS(String numero, String mensaje) {
 
-        // Find your Account Sid and Token at twilio.com/user/account
-        String ACCOUNT_SID = "";
-        String AUTH_TOKEN = "";
-
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Twilio.init(StaticsConstants.ACCOUNT_SID, StaticsConstants.AUTH_TOKEN);
 
         Message message = Message.creator(new PhoneNumber(numero),//to
-                new PhoneNumber("+14157921150"),//from
-                "Este es un mensaje de prueba! Desde mi Compu! :D").create();
+                new PhoneNumber(StaticsConstants.TELEPHONE_NUMBER_SERVER),//from
+                mensaje).create();
 
         if (message.getSid() != null) {
             return true;

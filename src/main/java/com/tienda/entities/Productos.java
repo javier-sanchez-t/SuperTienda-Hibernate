@@ -1,5 +1,5 @@
 package com.tienda.entities;
-// Generated 19/08/2017 08:06:52 PM by Hibernate Tools 4.3.1
+// Generated 20/08/2017 06:27:03 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -19,13 +19,14 @@ public class Productos  implements java.io.Serializable {
      private double precio;
      private int existencia;
      private int existenciaMin;
+     private int cantidadSolicitada;
      private Set ventases = new HashSet(0);
 
     public Productos() {
     }
 
 	
-    public Productos(String productoId, CategoriasProductos categoriasProductos, Proveedores proveedores, String nombre, String tamano, double precio, int existencia, int existenciaMin) {
+    public Productos(String productoId, CategoriasProductos categoriasProductos, Proveedores proveedores, String nombre, String tamano, double precio, int existencia, int existenciaMin, int cantidadSolicitada) {
         this.productoId = productoId;
         this.categoriasProductos = categoriasProductos;
         this.proveedores = proveedores;
@@ -34,8 +35,9 @@ public class Productos  implements java.io.Serializable {
         this.precio = precio;
         this.existencia = existencia;
         this.existenciaMin = existenciaMin;
+        this.cantidadSolicitada = cantidadSolicitada;
     }
-    public Productos(String productoId, CategoriasProductos categoriasProductos, Proveedores proveedores, String nombre, String tamano, double precio, int existencia, int existenciaMin, Set ventases) {
+    public Productos(String productoId, CategoriasProductos categoriasProductos, Proveedores proveedores, String nombre, String tamano, double precio, int existencia, int existenciaMin, int cantidadSolicitada, Set ventases) {
        this.productoId = productoId;
        this.categoriasProductos = categoriasProductos;
        this.proveedores = proveedores;
@@ -44,6 +46,7 @@ public class Productos  implements java.io.Serializable {
        this.precio = precio;
        this.existencia = existencia;
        this.existenciaMin = existenciaMin;
+       this.cantidadSolicitada = cantidadSolicitada;
        this.ventases = ventases;
     }
    
@@ -102,6 +105,13 @@ public class Productos  implements java.io.Serializable {
     
     public void setExistenciaMin(int existenciaMin) {
         this.existenciaMin = existenciaMin;
+    }
+    public int getCantidadSolicitada() {
+        return this.cantidadSolicitada;
+    }
+    
+    public void setCantidadSolicitada(int cantidadSolicitada) {
+        this.cantidadSolicitada = cantidadSolicitada;
     }
     public Set getVentases() {
         return this.ventases;
