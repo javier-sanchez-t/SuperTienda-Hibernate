@@ -9,6 +9,8 @@ import com.tienda.dao.GenericDAO;
 import com.tienda.entities.Proveedores;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -38,6 +40,24 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
             }
         };
         tabla.setModel(model);
+
+        //Se agrega el listener para clic sobre la tabla
+        tabla.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                int filaSeleccionada = tabla.getSelectedRow();
+                if (filaSeleccionada > -1) {
+                    lblProveedorId.setText(model.getValueAt(filaSeleccionada, 0).toString());
+                    txtNombre.setText(model.getValueAt(filaSeleccionada, 1).toString());
+                    txtEmail.setText(model.getValueAt(filaSeleccionada, 2).toString());
+                    txtTelefono.setText(model.getValueAt(filaSeleccionada, 3).toString());
+                    checkNotificacion.setSelected((boolean)model.getValueAt(filaSeleccionada, 4));
+                }
+            }
+        });
+
+        //Proveedor id es nulo
+        lblProveedorId.setText("Nuevo");
     }
 
     public void limpiarCampos() {
@@ -64,6 +84,8 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
         checkNotificacion = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        lblProveedorId = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
@@ -89,6 +111,10 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
 
         jLabel3.setText("*Teléfono:");
 
+        jLabel4.setText("Proveedor id:");
+
+        lblProveedorId.setText("proveedorId");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -96,6 +122,7 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -104,13 +131,18 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
                     .addComponent(checkNotificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNombre)
                     .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                    .addComponent(txtTelefono))
+                    .addComponent(txtTelefono)
+                    .addComponent(lblProveedorId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(lblProveedorId))
+                .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -142,6 +174,11 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
 
         btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/update.png"))); // NOI18N
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/search.png"))); // NOI18N
         btnBuscar.setText("Buscar");
@@ -220,9 +257,8 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -279,7 +315,7 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
         while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
-        
+
         //Se consultan los datos
         List<Proveedores> proveedores = dao.buscarProveedores(SQL_WHERE);
         for (Proveedores proveedor : proveedores) {
@@ -294,6 +330,15 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        if (lblProveedorId.getText().equals("Nuevo")) {
+            JOptionPane.showMessageDialog(this, "Este es un nuevo registro, utilice el botón 'Guardar'", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -305,9 +350,11 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblProveedorId;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNombre;
