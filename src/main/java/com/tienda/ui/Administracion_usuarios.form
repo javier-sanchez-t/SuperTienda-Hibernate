@@ -218,11 +218,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="btnBuscar" max="32767" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="btnActualizar" max="32767" attributes="1"/>
-                          <Component id="btnNuevo" alignment="1" max="32767" attributes="1"/>
-                          <Component id="btnguardar" alignment="1" max="32767" attributes="1"/>
-                      </Group>
+                      <Component id="btnActualizar" max="32767" attributes="1"/>
+                      <Component id="btnNuevo" alignment="1" max="32767" attributes="1"/>
+                      <Component id="btnguardar" alignment="1" max="32767" attributes="1"/>
                       <Component id="btnsalir" alignment="1" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace pref="13" max="32767" attributes="0"/>

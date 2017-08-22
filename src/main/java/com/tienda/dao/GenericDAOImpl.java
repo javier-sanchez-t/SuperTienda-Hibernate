@@ -118,6 +118,12 @@ public class GenericDAOImpl implements GenericDAO<Object> {
         return proveedores;
     }
 
+    public Proveedores buscarProveedorPorid(int proveedorId) {
+        return (Proveedores) getSesion().createSQLQuery("SELECT * FROM proveedores WHERE proveedor_id=?")
+                .addEntity(Proveedores.class)
+                .setInteger(0, proveedorId).uniqueResult();
+    }
+
     @Override
     public List<CategoriasProductos> buscarTodasCategoriasProductos() {
         return getSesion().createCriteria(CategoriasProductos.class).list();

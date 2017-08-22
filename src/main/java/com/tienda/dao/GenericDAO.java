@@ -39,6 +39,8 @@ public interface GenericDAO<T> {
 
     List<Proveedores> buscarProveedores(String parametros);
 
+    Proveedores buscarProveedorPorid(int proveedorId);
+
     //categorias productos
     List<CategoriasProductos> buscarTodasCategoriasProductos();
 

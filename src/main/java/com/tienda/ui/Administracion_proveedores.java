@@ -51,7 +51,7 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
                     txtNombre.setText(model.getValueAt(filaSeleccionada, 1).toString());
                     txtEmail.setText(model.getValueAt(filaSeleccionada, 2).toString());
                     txtTelefono.setText(model.getValueAt(filaSeleccionada, 3).toString());
-                    checkNotificacion.setSelected((boolean)model.getValueAt(filaSeleccionada, 4));
+                    checkNotificacion.setSelected((boolean) model.getValueAt(filaSeleccionada, 4));
                 }
             }
         });
@@ -61,6 +61,7 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
     }
 
     public void limpiarCampos() {
+        lblProveedorId.setText("Nuevo");
         txtNombre.setText("");
         txtEmail.setText("");
         txtTelefono.setText("");
@@ -171,6 +172,11 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/new.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/update.png"))); // NOI18N
         btnActualizar.setText("Actualizar");
@@ -336,8 +342,34 @@ public class Administracion_proveedores extends javax.swing.JInternalFrame {
             return;
         }
 
+        String NOMBRE = txtNombre.getText().trim();
+        String EMAIL = txtEmail.getText().trim();
+        String TELEFONO = txtTelefono.getText().trim();
+        boolean NOTIFICAR = checkNotificacion.isSelected();
 
+        if (!"".equals(EMAIL) && !"".equals(NOMBRE) && !"".equals(TELEFONO)) {
+            Proveedores proveedor = dao.buscarProveedorPorid(Integer.parseInt(lblProveedorId.getText()));
+            proveedor.setNombre(NOMBRE);
+            proveedor.setEmail(EMAIL);
+            proveedor.setTelefono(TELEFONO);
+            proveedor.setNotificacion(NOTIFICAR);
+            if (dao.guardar(proveedor)) {
+                limpiarCampos();
+                JOptionPane.showMessageDialog(this, "Proveedor actualizado satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al actualizar al proveedor", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese los campos requeridos", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        btnBuscarActionPerformed(evt);
+        limpiarCampos();
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

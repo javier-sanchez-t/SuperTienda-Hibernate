@@ -395,7 +395,7 @@ public class Administracion_usuarios extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "Usuario actualizado satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
                     limpiarCampos();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar al usuario", "Error!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error al actualizar al usuario", "Error!", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Ingrese un email valido", "Error!", JOptionPane.ERROR_MESSAGE);
