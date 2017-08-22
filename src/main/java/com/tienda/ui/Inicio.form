@@ -24,6 +24,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuVentas">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/tienda/iconos/sales.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Ventas"/>
           </Properties>
           <SubComponents>
@@ -42,6 +45,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuAdministracion">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/tienda/iconos/administration.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Administraci&#xf3;n"/>
           </Properties>
           <SubComponents>
@@ -93,6 +99,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuReportes">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/tienda/iconos/reports.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Reportes"/>
           </Properties>
           <SubComponents>

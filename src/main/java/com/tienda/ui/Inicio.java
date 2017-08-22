@@ -114,6 +114,7 @@ public class Inicio extends javax.swing.JFrame {
 
         Menus.add(menuArchivo);
 
+        menuVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/sales.png"))); // NOI18N
         menuVentas.setText("Ventas");
 
         iMenuRegistroVentas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
@@ -127,6 +128,7 @@ public class Inicio extends javax.swing.JFrame {
 
         Menus.add(menuVentas);
 
+        menuAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/administration.png"))); // NOI18N
         menuAdministracion.setText("Administración");
 
         imenuUsuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
@@ -167,6 +169,7 @@ public class Inicio extends javax.swing.JFrame {
 
         Menus.add(menuAdministracion);
 
+        menuReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/reports.png"))); // NOI18N
         menuReportes.setText("Reportes");
 
         imenuProductosMasVendidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
