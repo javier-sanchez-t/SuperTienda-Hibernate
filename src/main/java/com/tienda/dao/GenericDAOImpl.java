@@ -112,6 +112,12 @@ public class GenericDAOImpl implements GenericDAO<Object> {
         return getSesion().createCriteria(Proveedores.class).list();
     }
 
+    public List<Proveedores> buscarProveedores(String parametros) {
+        List<Proveedores> proveedores = getSesion().createSQLQuery("SELECT * FROM proveedores" + parametros)
+                .addEntity(Proveedores.class).list();
+        return proveedores;
+    }
+
     @Override
     public List<CategoriasProductos> buscarTodasCategoriasProductos() {
         return getSesion().createCriteria(CategoriasProductos.class).list();
@@ -133,7 +139,7 @@ public class GenericDAOImpl implements GenericDAO<Object> {
     @Override
     public void actualizarExistenciaProducto(String productoId, int numProductos) {
         Productos producto = buscarProductoPorCodigo(productoId);
-        producto.setExistencia(producto.getExistencia()-numProductos);
+        producto.setExistencia(producto.getExistencia() - numProductos);
         guardar(producto);
     }
 

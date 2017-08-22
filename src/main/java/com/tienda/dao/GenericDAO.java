@@ -37,6 +37,8 @@ public interface GenericDAO<T> {
     //Proveedores
     List<Proveedores> buscarTodosProveedores();
 
+    List<Proveedores> buscarProveedores(String parametros);
+
     //categorias productos
     List<CategoriasProductos> buscarTodasCategoriasProductos();
 
@@ -44,7 +46,7 @@ public interface GenericDAO<T> {
     Productos buscarProductoPorCodigo(String codigo);
 
     List<Productos> buscarTodosProductos();
-    
+
     void actualizarExistenciaProducto(String productoId, int numProductos);
 
     //Ventas
