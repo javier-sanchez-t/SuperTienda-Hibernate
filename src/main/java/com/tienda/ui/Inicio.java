@@ -101,9 +101,11 @@ public class Inicio extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
         );
 
+        menuArchivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/carpet.png"))); // NOI18N
         menuArchivo.setText("Archivo");
 
         iMenuCerrarSesion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        iMenuCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/turnOff.png"))); // NOI18N
         iMenuCerrarSesion.setText("Cerrar sesión");
         iMenuCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,6 +120,7 @@ public class Inicio extends javax.swing.JFrame {
         menuVentas.setText("Ventas");
 
         iMenuRegistroVentas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
+        iMenuRegistroVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/sale.png"))); // NOI18N
         iMenuRegistroVentas.setText("Registro de ventas");
         iMenuRegistroVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,6 +135,7 @@ public class Inicio extends javax.swing.JFrame {
         menuAdministracion.setText("Administración");
 
         imenuUsuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        imenuUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/users.png"))); // NOI18N
         imenuUsuarios.setText("Usuarios");
         imenuUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,6 +145,7 @@ public class Inicio extends javax.swing.JFrame {
         menuAdministracion.add(imenuUsuarios);
 
         iMenuProveedores.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        iMenuProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/providers.png"))); // NOI18N
         iMenuProveedores.setText("Proveedores");
         iMenuProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,6 +155,7 @@ public class Inicio extends javax.swing.JFrame {
         menuAdministracion.add(iMenuProveedores);
 
         iMenuCategorias.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        iMenuCategorias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/categories.png"))); // NOI18N
         iMenuCategorias.setText("Categorías de productos");
         iMenuCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,6 +165,7 @@ public class Inicio extends javax.swing.JFrame {
         menuAdministracion.add(iMenuCategorias);
 
         iMenuProductos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        iMenuProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/products.png"))); // NOI18N
         iMenuProductos.setText("Productos");
         iMenuProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +180,7 @@ public class Inicio extends javax.swing.JFrame {
         menuReportes.setText("Reportes");
 
         imenuProductosMasVendidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        imenuProductosMasVendidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/soldProducts.png"))); // NOI18N
         imenuProductosMasVendidos.setText("Productos más vendidos");
         imenuProductosMasVendidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,10 +190,12 @@ public class Inicio extends javax.swing.JFrame {
         menuReportes.add(imenuProductosMasVendidos);
 
         imenuEstadisticasDeVentas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        imenuEstadisticasDeVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/Statistics.png"))); // NOI18N
         imenuEstadisticasDeVentas.setText("Estadísticas de ventas");
         menuReportes.add(imenuEstadisticasDeVentas);
 
         imenuVentasPorUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        imenuVentasPorUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/salesByUser.png"))); // NOI18N
         imenuVentasPorUsuario.setText("Ventas por usuario");
         menuReportes.add(imenuVentasPorUsuario);
 
