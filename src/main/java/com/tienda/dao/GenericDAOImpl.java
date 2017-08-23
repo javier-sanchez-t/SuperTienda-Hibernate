@@ -165,6 +165,12 @@ public class GenericDAOImpl implements GenericDAO<Object> {
     }
 
     @Override
+    public List<Productos> buscarProductos(String parametros) {
+        return getSesion().createSQLQuery("SELECT * FROM productos" + parametros)
+                .addEntity(Productos.class).list();
+    }
+
+    @Override
     public List<Ventas> buscarVentasEntreFechas(String fechaInicio, String fechaFin) {
         List<Ventas> ventas = getSesion().createSQLQuery("SELECT * FROM ventas WHERE fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "';")
                 .addEntity(Ventas.class).list();

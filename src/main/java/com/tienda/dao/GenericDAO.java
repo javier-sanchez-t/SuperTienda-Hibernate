@@ -43,9 +43,9 @@ public interface GenericDAO<T> {
 
     //categorias productos
     List<CategoriasProductos> buscarTodasCategoriasProductos();
-    
+
     List<CategoriasProductos> buscarCategoriasProductos(String parametros);
-    
+
     CategoriasProductos buscarCategoriaProductoPorId(int categoriaProdId);
 
     //Productos
@@ -54,6 +54,8 @@ public interface GenericDAO<T> {
     List<Productos> buscarTodosProductos();
 
     void actualizarExistenciaProducto(String productoId, int numProductos);
+
+    List<Productos> buscarProductos(String parametros);
 
     //Ventas
     List<Ventas> buscarVentasEntreFechas(String fechaInicio, String fechaFin);

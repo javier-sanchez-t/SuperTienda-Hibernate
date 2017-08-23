@@ -11,6 +11,8 @@ import com.tienda.entities.Productos;
 import com.tienda.entities.Proveedores;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * @author MBN USER
  */
 public class Administracion_productos extends javax.swing.JInternalFrame {
-
+    
     private GenericDAO dao;
     public List<CategoriasProductos> categoriasProductos;
     public List<Proveedores> proveedores;
@@ -32,12 +34,12 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
 
         //Se recibe el dao desde el jframe inicio
         this.dao = dao;
-
+        
         categoriasProductos = dao.buscarTodasCategoriasProductos();
         for (CategoriasProductos categorias : categoriasProductos) {
             comboCategoria.addItem(categorias.getNombre());
         }
-
+        
         proveedores = dao.buscarTodosProveedores();
         for (Proveedores proveedor : proveedores) {
             comboProveedor.addItem(proveedor.getNombre());
@@ -52,8 +54,27 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
             }
         };
         tabla.setModel(model);
-    }
 
+        //Se agrega el listener para clic sobre la tabla
+        tabla.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                int filaSeleccionada = tabla.getSelectedRow();
+                if (filaSeleccionada > -1) {
+                    txtCodigo.setText(model.getValueAt(filaSeleccionada, 0).toString());
+                    txtNombre.setText(model.getValueAt(filaSeleccionada, 1).toString());
+                    txtTamano.setText(model.getValueAt(filaSeleccionada, 2).toString());
+                    txtPrecio.setText(model.getValueAt(filaSeleccionada, 3).toString());
+                    txtExistencia.setText(model.getValueAt(filaSeleccionada, 4).toString());
+                    txtExistenciaMin.setText(model.getValueAt(filaSeleccionada, 5).toString());
+                    txtCantidadSolicitada.setText(model.getValueAt(filaSeleccionada, 6).toString());
+                    comboCategoria.setSelectedItem(model.getValueAt(filaSeleccionada, 7).toString());
+                    comboProveedor.setSelectedItem(model.getValueAt(filaSeleccionada, 8).toString());
+                }
+            }
+        });
+    }
+    
     public void limpiarCampos() {
         txtCodigo.setText("");
         txtNombre.setText("");
@@ -239,12 +260,22 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/new.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/update.png"))); // NOI18N
         btnActualizar.setText("Actualizar");
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/search.png"))); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/exit.png"))); // NOI18N
         btnSalir.setText("Salir");
@@ -337,7 +368,7 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
         String CANTIDAD_A_SOLICITAR = txtCantidadSolicitada.getText().trim();
         int CATEGORIA = comboCategoria.getSelectedIndex();
         int PROVEEDOR = comboProveedor.getSelectedIndex();
-
+        
         if (!"".equals(CODIGO) && !"".equals(NOMBRE) && !"".equals(TAMANO) && !"".equals(PRECIO_STRING)
                 && !"".equals(EXISTENCIA_STRING) && !"".equals(EXISTENCIA_MIN_STRING) && !"".equals(CANTIDAD_A_SOLICITAR)
                 && CATEGORIA != 0 && PROVEEDOR != 0) {
@@ -345,13 +376,13 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
             int EXISTENCIA = Integer.parseInt(txtExistencia.getText().trim());
             int EXISTENCIA_MIN = Integer.parseInt(txtExistenciaMin.getText().trim());
             int CANT_A_SOLCITAR = Integer.parseInt(CANTIDAD_A_SOLICITAR);
-
+            
             CategoriasProductos categoriaProducto = new CategoriasProductos();
             categoriaProducto = categoriasProductos.get(CATEGORIA - 1);
-
+            
             Proveedores proveedor = new Proveedores();
             proveedor = proveedores.get(PROVEEDOR - 1);
-
+            
             Productos producto = new Productos();
             producto.setProductoId(CODIGO);
             producto.setNombre(NOMBRE);
@@ -362,7 +393,7 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
             producto.setCategoriasProductos(categoriaProducto);
             producto.setProveedores(proveedor);
             producto.setCantidadSolicitada(CANT_A_SOLCITAR);
-
+            
             if (dao.guardar(producto)) {
                 JOptionPane.showMessageDialog(this, "Producto registrado satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
@@ -377,6 +408,80 @@ public class Administracion_productos extends javax.swing.JInternalFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String CODIGO = txtCodigo.getText().trim();
+        String NOMBRE = txtNombre.getText().trim();
+        String TAMANO = txtTamano.getText().trim();
+        String PRECIO_STRING = txtPrecio.getText().trim();
+        String EXISTENCIA_STRING = txtExistencia.getText().trim();
+        String EXISTENCIA_MIN_STRING = txtExistenciaMin.getText().trim();
+        String CANTIDAD_A_SOLICITAR = txtCantidadSolicitada.getText().trim();
+        int CATEGORIA = comboCategoria.getSelectedIndex();
+        int PROVEEDOR = comboProveedor.getSelectedIndex();
+        String SQL_WHERE = " WHERE 1=1";
+        
+        if (!"".equals(CODIGO)) {
+            SQL_WHERE += " AND producto_id LIKE '%" + CODIGO + "%'";
+        }
+        
+        if (!"".equals(NOMBRE)) {
+            SQL_WHERE += " AND nombre LIKE '%" + NOMBRE + "%'";
+        }
+        
+        if (!"".equals(TAMANO)) {
+            SQL_WHERE += " AND tamano LIKE '%" + TAMANO + "%'";
+        }
+        
+        if (!"".equals(PRECIO_STRING)) {
+            SQL_WHERE += " AND precio=" + PRECIO_STRING;
+        }
+        
+        if (!"".equals(EXISTENCIA_STRING)) {
+            SQL_WHERE += " AND existencia=" + EXISTENCIA_STRING;
+        }
+        
+        if (!"".equals(EXISTENCIA_MIN_STRING)) {
+            SQL_WHERE += " AND existencia_min=" + EXISTENCIA_MIN_STRING;
+        }
+        
+        if (!"".equals(CANTIDAD_A_SOLICITAR)) {
+            SQL_WHERE += " AND cantidad_solicitada=" + CANTIDAD_A_SOLICITAR;
+        }
+        
+        if (CATEGORIA != 0) {
+            SQL_WHERE += " AND categoria_id=" + categoriasProductos.get(CATEGORIA - 1).getCategoriaProductoId();
+        }
+        
+        if (PROVEEDOR != 0) {
+            SQL_WHERE += " AND proveedor_id=" + proveedores.get(PROVEEDOR - 1).getProveedorId();
+        }
+
+        //Remueve los elementos contenidos en la tabla
+        while (model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
+        
+        List<Productos> productos = dao.buscarProductos(SQL_WHERE);
+        for (Productos producto : productos) {
+            Object[] u = new Object[9];
+            u[0] = producto.getProductoId();
+            u[1] = producto.getNombre();
+            u[2] = producto.getTamano();
+            u[3] = producto.getPrecio();
+            u[4] = producto.getExistencia();
+            u[5] = producto.getExistenciaMin();
+            u[6] = producto.getCantidadSolicitada();
+            u[7] = producto.getCategoriasProductos().getNombre();
+            u[8] = producto.getProveedores().getNombre();
+            model.addRow(u);
+            tabla.setModel(model);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
