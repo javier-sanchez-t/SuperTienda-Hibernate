@@ -192,6 +192,11 @@ public class Inicio extends javax.swing.JFrame {
         imenuEstadisticasDeVentas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         imenuEstadisticasDeVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/Statistics.png"))); // NOI18N
         imenuEstadisticasDeVentas.setText("Estadísticas de ventas");
+        imenuEstadisticasDeVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imenuEstadisticasDeVentasActionPerformed(evt);
+            }
+        });
         menuReportes.add(imenuEstadisticasDeVentas);
 
         imenuVentasPorUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
@@ -258,6 +263,12 @@ public class Inicio extends javax.swing.JFrame {
         PanelEscritorio.add(reporteProductosMasVendidos);
         reporteProductosMasVendidos.show();
     }//GEN-LAST:event_imenuProductosMasVendidosActionPerformed
+
+    private void imenuEstadisticasDeVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imenuEstadisticasDeVentasActionPerformed
+        ReporteEstadisticasVentas reporteEstadisticasVentas = new ReporteEstadisticasVentas();
+        PanelEscritorio.add(reporteEstadisticasVentas);
+        reporteEstadisticasVentas.show();
+    }//GEN-LAST:event_imenuEstadisticasDeVentasActionPerformed
 
     /**
      * @param args the command line arguments
