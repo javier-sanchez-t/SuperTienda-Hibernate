@@ -58,6 +58,7 @@ public class Administracion_cat_productos extends javax.swing.JInternalFrame {
     }
 
     public void limpiarCampos() {
+        lblCategoriaId.setText("Nuevo");
         txtNombre.setText("");
     }
 
@@ -139,9 +140,19 @@ public class Administracion_cat_productos extends javax.swing.JInternalFrame {
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/new.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/update.png"))); // NOI18N
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/search.png"))); // NOI18N
         btnBuscar.setText("Buscar");
@@ -212,7 +223,7 @@ public class Administracion_cat_productos extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,7 +272,7 @@ public class Administracion_cat_productos extends javax.swing.JInternalFrame {
         while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
-        
+
         List<CategoriasProductos> categorias = dao.buscarCategoriasProductos(SQL_WHERE);
         for (CategoriasProductos categoria : categorias) {
             Object[] u = new Object[2];
@@ -271,6 +282,34 @@ public class Administracion_cat_productos extends javax.swing.JInternalFrame {
             tabla.setModel(model);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        if (lblCategoriaId.getText().equals("Nuevo")) {
+            JOptionPane.showMessageDialog(this, "Este es un nuevo registro, utilice el botón 'Guardar'", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String NOMBRE = txtNombre.getText().trim();
+        if (!"".equals(NOMBRE)) {
+            CategoriasProductos categoriasProductos = dao.buscarCategoriaProductoPorId(Integer.parseInt(lblCategoriaId.getText()));
+            categoriasProductos.setNombre(NOMBRE);
+            if (dao.guardar(categoriasProductos)) {
+                limpiarCampos();
+                JOptionPane.showMessageDialog(this, "Categoría actualizada satisfactoriamente", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al actualizar la categoría", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese los campos requeridos", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        btnBuscarActionPerformed(evt);
+        limpiarCampos();
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

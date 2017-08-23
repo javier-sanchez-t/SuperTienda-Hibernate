@@ -131,9 +131,17 @@ public class GenericDAOImpl implements GenericDAO<Object> {
         return getSesion().createCriteria(CategoriasProductos.class).list();
     }
 
+    @Override
     public List<CategoriasProductos> buscarCategoriasProductos(String parametros) {
-        return getSesion().createSQLQuery("SELECT * FROM categorias_productos"+parametros)
+        return getSesion().createSQLQuery("SELECT * FROM categorias_productos" + parametros)
                 .addEntity(CategoriasProductos.class).list();
+    }
+
+    @Override
+    public CategoriasProductos buscarCategoriaProductoPorId(int categoriaProdId) {
+        return (CategoriasProductos) getSesion().createSQLQuery("SELECT * FROM categorias_productos WHERE categoria_producto_id=?")
+                .addEntity(CategoriasProductos.class)
+                .setInteger(0, categoriaProdId).uniqueResult();
     }
 
     @Override

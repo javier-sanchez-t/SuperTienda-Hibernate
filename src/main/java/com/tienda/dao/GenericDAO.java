@@ -45,6 +45,8 @@ public interface GenericDAO<T> {
     List<CategoriasProductos> buscarTodasCategoriasProductos();
     
     List<CategoriasProductos> buscarCategoriasProductos(String parametros);
+    
+    CategoriasProductos buscarCategoriaProductoPorId(int categoriaProdId);
 
     //Productos
     Productos buscarProductoPorCodigo(String codigo);
