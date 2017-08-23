@@ -172,7 +172,13 @@ public class GenericDAOImpl implements GenericDAO<Object> {
 
     @Override
     public List<Ventas> buscarVentasEntreFechas(String fechaInicio, String fechaFin) {
-        List<Ventas> ventas = getSesion().createSQLQuery("SELECT * FROM ventas WHERE fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "';")
+        String SQL_WHERE = " WHERE 1=1";
+        if (fechaInicio.equals(fechaFin)) {
+            SQL_WHERE += " AND fecha='" + fechaInicio+"'";
+        } else {
+            SQL_WHERE += " AND fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin+"'";
+        }
+        List<Ventas> ventas = getSesion().createSQLQuery("SELECT * FROM ventas" + SQL_WHERE)
                 .addEntity(Ventas.class).list();
         return ventas;
     }
