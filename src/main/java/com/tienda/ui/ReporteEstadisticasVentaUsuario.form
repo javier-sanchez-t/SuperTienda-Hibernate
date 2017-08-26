@@ -69,7 +69,7 @@
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="btnGenerarGrafico" min="-2" pref="143" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnGenerarPDF" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnPDF" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="58" max="32767" attributes="0"/>
@@ -86,7 +86,7 @@
                       <Component id="dateFechaInicio" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="dateFechaFin" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnGenerarGrafico" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnGenerarPDF" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnPDF" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -120,13 +120,16 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGenerarGraficoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnGenerarPDF">
+        <Component class="javax.swing.JButton" name="btnPDF">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/com/tienda/iconos/pdf .png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Generar PDF"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPDFActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCancelar">
           <Properties>

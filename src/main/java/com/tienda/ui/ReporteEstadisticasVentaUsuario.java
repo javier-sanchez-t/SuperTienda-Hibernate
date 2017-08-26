@@ -6,9 +6,12 @@
 package com.tienda.ui;
 
 import com.tienda.dao.GenericDAO;
+import com.tienda.util.PDFUtil;
 import com.tienda.util.Util;
 import java.awt.Color;
+import java.io.File;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -34,6 +37,7 @@ public class ReporteEstadisticasVentaUsuario extends javax.swing.JInternalFrame 
 
         //Se recibe el dao creado en login (el dao ya contiene la sesión necesaria, para conulta a BD)
         this.dao = dao;
+        btnPDF.setEnabled(false);
     }
 
     /**
@@ -51,7 +55,7 @@ public class ReporteEstadisticasVentaUsuario extends javax.swing.JInternalFrame 
         dateFechaInicio = new org.jdesktop.swingx.JXDatePicker();
         dateFechaFin = new org.jdesktop.swingx.JXDatePicker();
         btnGenerarGrafico = new javax.swing.JButton();
-        btnGenerarPDF = new javax.swing.JButton();
+        btnPDF = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         panelGrafico = new javax.swing.JPanel();
 
@@ -75,8 +79,13 @@ public class ReporteEstadisticasVentaUsuario extends javax.swing.JInternalFrame 
             }
         });
 
-        btnGenerarPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/pdf .png"))); // NOI18N
-        btnGenerarPDF.setText("Generar PDF");
+        btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/pdf .png"))); // NOI18N
+        btnPDF.setText("Generar PDF");
+        btnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPDFActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/cancel.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -102,7 +111,7 @@ public class ReporteEstadisticasVentaUsuario extends javax.swing.JInternalFrame 
                 .addGap(35, 35, 35)
                 .addComponent(btnGenerarGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGenerarPDF)
+                .addComponent(btnPDF)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelar)
                 .addContainerGap(58, Short.MAX_VALUE))
@@ -117,12 +126,12 @@ public class ReporteEstadisticasVentaUsuario extends javax.swing.JInternalFrame 
                     .addComponent(dateFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dateFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGenerarGrafico)
-                    .addComponent(btnGenerarPDF)
+                    .addComponent(btnPDF)
                     .addComponent(btnCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelGrafico.setLayout(new java.awt.GridLayout());
+        panelGrafico.setLayout(new java.awt.GridLayout(1, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,12 +164,12 @@ public class ReporteEstadisticasVentaUsuario extends javax.swing.JInternalFrame 
             return;
         }
 
-        btnGenerarPDF.setEnabled(true);
-        
+        btnPDF.setEnabled(true);
+
         panelGrafico.removeAll();
         panelGrafico.revalidate();
         panelGrafico.repaint();
-        
+
         this.setSize(890, 550);
 
         //Se obtienen los datos
@@ -179,7 +188,7 @@ public class ReporteEstadisticasVentaUsuario extends javax.swing.JInternalFrame 
         chart.getTitle().setPaint(Color.black);
         CategoryPlot p = chart.getCategoryPlot();
         p.setRangeGridlinePaint(Color.red);
-        
+
         ChartPanel chartPanel = new ChartPanel(chart);
         panelGrafico.add(chartPanel);
         panelGrafico.revalidate();
@@ -187,11 +196,22 @@ public class ReporteEstadisticasVentaUsuario extends javax.swing.JInternalFrame 
 
     }//GEN-LAST:event_btnGenerarGraficoActionPerformed
 
+    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Seleccionar destino");
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            PDFUtil.crearGraficaPDF(fileToSave.getAbsolutePath() + ".pdf", chart);
+        }
+    }//GEN-LAST:event_btnPDFActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGenerarGrafico;
-    private javax.swing.JButton btnGenerarPDF;
+    private javax.swing.JButton btnPDF;
     private org.jdesktop.swingx.JXDatePicker dateFechaFin;
     private org.jdesktop.swingx.JXDatePicker dateFechaInicio;
     private javax.swing.JLabel jLabel1;
