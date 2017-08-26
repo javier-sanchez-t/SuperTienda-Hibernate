@@ -265,7 +265,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_imenuProductosMasVendidosActionPerformed
 
     private void imenuEstadisticasDeVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imenuEstadisticasDeVentasActionPerformed
-        ReporteEstadisticasVentas reporteEstadisticasVentas = new ReporteEstadisticasVentas();
+        ReporteEstadisticasVentas reporteEstadisticasVentas = new ReporteEstadisticasVentas(dao);
         PanelEscritorio.add(reporteEstadisticasVentas);
         reporteEstadisticasVentas.show();
     }//GEN-LAST:event_imenuEstadisticasDeVentasActionPerformed

@@ -174,12 +174,22 @@ public class GenericDAOImpl implements GenericDAO<Object> {
     public List<Ventas> buscarVentasEntreFechas(String fechaInicio, String fechaFin) {
         String SQL_WHERE = " WHERE 1=1";
         if (fechaInicio.equals(fechaFin)) {
-            SQL_WHERE += " AND fecha='" + fechaInicio+"'";
+            SQL_WHERE += " AND fecha='" + fechaInicio + "'";
         } else {
-            SQL_WHERE += " AND fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin+"'";
+            SQL_WHERE += " AND fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'";
         }
         List<Ventas> ventas = getSesion().createSQLQuery("SELECT * FROM ventas" + SQL_WHERE)
                 .addEntity(Ventas.class).list();
+        return ventas;
+    }
+
+    @Override
+    public List<Object[]> buscarVentasPorAnio(String anio) {
+        String SQL = "SELECT * FROM (SELECT extract(month from fecha) as mes, "
+                + "extract(year from fecha) as anio, "
+                + "sum(\"monto\") as \"monto\" "
+                + "FROM ventas GROUP BY fecha) AS historial_ventas WHERE anio=" + anio + " ORDER BY mes";
+        List<Object[]> ventas = getSesion().createSQLQuery(SQL).list();
         return ventas;
     }
 

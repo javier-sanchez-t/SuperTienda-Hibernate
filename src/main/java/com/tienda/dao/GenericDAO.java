@@ -59,6 +59,8 @@ public interface GenericDAO<T> {
 
     //Ventas
     List<Ventas> buscarVentasEntreFechas(String fechaInicio, String fechaFin);
+    
+    List<Object[]> buscarVentasPorAnio(String anio);
 
     Session getSesion();
 }

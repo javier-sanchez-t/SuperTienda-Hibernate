@@ -5,17 +5,36 @@
  */
 package com.tienda.ui;
 
+import com.tienda.dao.GenericDAO;
+import com.tienda.util.Util;
+import java.util.List;
+import javax.swing.JOptionPane;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 /**
  *
  * @author MBN USER
  */
 public class ReporteEstadisticasVentas extends javax.swing.JInternalFrame {
 
+    private GenericDAO dao;
+
     /**
      * Creates new form ReporteEstadisticasVentas
      */
-    public ReporteEstadisticasVentas() {
+    public ReporteEstadisticasVentas(GenericDAO dao) {
         initComponents();
+
+        //Se recibe el dao desde el jframe inicio
+        this.dao = dao;
+        btnPDF.setEnabled(false);
     }
 
     /**
@@ -27,32 +46,33 @@ public class ReporteEstadisticasVentas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelParametros = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        dateFechaInicio = new org.jdesktop.swingx.JXDatePicker();
-        dateFechaFin = new org.jdesktop.swingx.JXDatePicker();
         btnGenerarGrafico = new javax.swing.JButton();
-        btnGenerarPDF = new javax.swing.JButton();
+        btnPDF = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        comboAnio = new javax.swing.JComboBox<>();
+        panelGrafico = new javax.swing.JPanel();
 
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Reporte de estadísticas de ventas");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Parámetros de generación"));
+        panelParametros.setBorder(javax.swing.BorderFactory.createTitledBorder("Parámetros de generación"));
 
-        jLabel1.setText("Fecha inicio:");
-
-        jLabel2.setText("Fecha fin:");
+        jLabel1.setText("Año:");
 
         btnGenerarGrafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/graph.png"))); // NOI18N
         btnGenerarGrafico.setText("Generar gráfico");
+        btnGenerarGrafico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarGraficoActionPerformed(evt);
+            }
+        });
 
-        btnGenerarPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/pdf .png"))); // NOI18N
-        btnGenerarPDF.setText("Generar PDF");
+        btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/pdf .png"))); // NOI18N
+        btnPDF.setText("Generar PDF");
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/cancel.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -62,52 +82,39 @@ public class ReporteEstadisticasVentas extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        comboAnio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Seleccione ---", "2016", "2017", "2018" }));
+
+        javax.swing.GroupLayout panelParametrosLayout = new javax.swing.GroupLayout(panelParametros);
+        panelParametros.setLayout(panelParametrosLayout);
+        panelParametrosLayout.setHorizontalGroup(
+            panelParametrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelParametrosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(226, 226, 226)
                 .addComponent(btnGenerarGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGenerarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelParametrosLayout.setVerticalGroup(
+            panelParametrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelParametrosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelParametrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(dateFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGenerarGrafico)
-                    .addComponent(btnGenerarPDF)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnPDF)
+                    .addComponent(btnCancelar)
+                    .addComponent(comboAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 13, Short.MAX_VALUE)
-        );
+        panelGrafico.setLayout(new java.awt.GridLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,36 +122,76 @@ public class ReporteEstadisticasVentas extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelParametros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(panelParametros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGenerarGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarGraficoActionPerformed
+        if(comboAnio.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(this, "Seleccione el año a evaluar", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        btnPDF.setEnabled(true);
+        
+        panelGrafico.removeAll();
+        panelGrafico.revalidate();
+        panelGrafico.repaint();
+        
+        this.setSize(890, 550);
+
+        //Se obtienen los datos        
+        List<Object[]> ventas = dao.buscarVentasPorAnio(comboAnio.getSelectedItem().toString());
+
+        //Fuente de datos
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (Object object[] : ventas) {
+            double monto = Double.parseDouble(object[2].toString());
+
+            double mesDouble = (double) object[0];
+            int mesInt = (int) mesDouble;
+            String mes = Util.obtenerMesString(mesInt);
+
+            dataset.addValue(monto, "Ventas", mes);
+        }
+
+        JFreeChart lineChart = ChartFactory.createLineChart(
+                "Ventas",
+                "Mes", "$",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true, true, false);
+
+        ChartPanel chartPanel = new ChartPanel(lineChart);
+        panelGrafico.add(chartPanel);
+        panelGrafico.revalidate();
+        panelGrafico.repaint();
+    }//GEN-LAST:event_btnGenerarGraficoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGenerarGrafico;
-    private javax.swing.JButton btnGenerarPDF;
-    private org.jdesktop.swingx.JXDatePicker dateFechaFin;
-    private org.jdesktop.swingx.JXDatePicker dateFechaInicio;
+    private javax.swing.JButton btnPDF;
+    private javax.swing.JComboBox<String> comboAnio;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel panelGrafico;
+    private javax.swing.JPanel panelParametros;
     // End of variables declaration//GEN-END:variables
 }
