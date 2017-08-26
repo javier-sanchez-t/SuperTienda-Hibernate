@@ -6,8 +6,11 @@
 package com.tienda.ui;
 
 import com.tienda.dao.GenericDAO;
+import com.tienda.util.PDFUtil;
 import com.tienda.util.Util;
+import java.io.File;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
@@ -25,6 +28,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class ReporteEstadisticasVentas extends javax.swing.JInternalFrame {
 
     private GenericDAO dao;
+    JFreeChart lineChart;
 
     /**
      * Creates new form ReporteEstadisticasVentas
@@ -57,7 +61,7 @@ public class ReporteEstadisticasVentas extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Reporte de estadísticas de ventas");
+        setTitle("Reporte de estadísticas de venta anuales");
 
         panelParametros.setBorder(javax.swing.BorderFactory.createTitledBorder("Parámetros de generación"));
 
@@ -73,6 +77,11 @@ public class ReporteEstadisticasVentas extends javax.swing.JInternalFrame {
 
         btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/pdf .png"))); // NOI18N
         btnPDF.setText("Generar PDF");
+        btnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPDFActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/cancel.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -168,10 +177,10 @@ public class ReporteEstadisticasVentas extends javax.swing.JInternalFrame {
             int mesInt = (int) mesDouble;
             String mes = Util.obtenerMesString(mesInt);
 
-            dataset.addValue(monto, "Ventas", mes);
+            dataset.addValue(monto, "Ventas anuales", mes);
         }
 
-        JFreeChart lineChart = ChartFactory.createLineChart(
+        lineChart = ChartFactory.createLineChart(
                 "Ventas",
                 "Mes", "$",
                 dataset,
@@ -183,6 +192,17 @@ public class ReporteEstadisticasVentas extends javax.swing.JInternalFrame {
         panelGrafico.revalidate();
         panelGrafico.repaint();
     }//GEN-LAST:event_btnGenerarGraficoActionPerformed
+
+    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+       JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Seleccionar destino");
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            PDFUtil.crearGraficaPDF(fileToSave.getAbsolutePath() + ".pdf", lineChart);
+        }
+    }//GEN-LAST:event_btnPDFActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

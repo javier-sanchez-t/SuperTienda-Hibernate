@@ -70,7 +70,7 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Reporte de productos más vendidos");
+        setTitle("Estadísticas de venta por producto");
 
         panelParametros.setBorder(javax.swing.BorderFactory.createTitledBorder("Parámetros de generación"));
 

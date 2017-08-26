@@ -134,7 +134,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/tienda/iconos/soldProducts.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Productos m&#xe1;s vendidos"/>
+                <Property name="text" type="java.lang.String" value="Estad&#xed;sticas de venta por producto"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imenuProductosMasVendidosActionPerformed"/>
@@ -148,7 +148,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/tienda/iconos/Statistics.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Estad&#xed;sticas de ventas"/>
+                <Property name="text" type="java.lang.String" value="Estad&#xed;sticas de venta anuales"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imenuEstadisticasDeVentasActionPerformed"/>

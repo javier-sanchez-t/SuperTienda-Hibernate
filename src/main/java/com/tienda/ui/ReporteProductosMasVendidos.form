@@ -10,7 +10,7 @@
     <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Reporte de productos m&#xe1;s vendidos"/>
+    <Property name="title" type="java.lang.String" value="Estad&#xed;sticas de venta por producto"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
