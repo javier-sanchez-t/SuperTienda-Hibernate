@@ -202,6 +202,11 @@ public class Inicio extends javax.swing.JFrame {
         imenuVentasPorUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         imenuVentasPorUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/salesByUser.png"))); // NOI18N
         imenuVentasPorUsuario.setText("Ventas por usuario");
+        imenuVentasPorUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imenuVentasPorUsuarioActionPerformed(evt);
+            }
+        });
         menuReportes.add(imenuVentasPorUsuario);
 
         Menus.add(menuReportes);
@@ -269,6 +274,12 @@ public class Inicio extends javax.swing.JFrame {
         PanelEscritorio.add(reporteEstadisticasVentas);
         reporteEstadisticasVentas.show();
     }//GEN-LAST:event_imenuEstadisticasDeVentasActionPerformed
+
+    private void imenuVentasPorUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imenuVentasPorUsuarioActionPerformed
+        ReporteEstadisticasVentaUsuario estadisticasVentaUsuario = new ReporteEstadisticasVentaUsuario(dao);
+        PanelEscritorio.add(estadisticasVentaUsuario);
+        estadisticasVentaUsuario.show();
+    }//GEN-LAST:event_imenuVentasPorUsuarioActionPerformed
 
     /**
      * @param args the command line arguments

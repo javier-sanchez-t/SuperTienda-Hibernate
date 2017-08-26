@@ -43,7 +43,7 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
 
         //Se recibe el dao desde el jframe inicio
         this.dao = dao;
-        btnPDF.setEnabled(false);
+        btnGenerarPDF.setEnabled(false);
     }
 
     /**
@@ -63,7 +63,7 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
         dateFechaInicio = new org.jdesktop.swingx.JXDatePicker();
         btnGenerarGrafico = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnPDF = new javax.swing.JButton();
+        btnGenerarPDF = new javax.swing.JButton();
         panelGrafico = new javax.swing.JPanel();
 
         setClosable(true);
@@ -94,11 +94,11 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
             }
         });
 
-        btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/pdf .png"))); // NOI18N
-        btnPDF.setText("Generar PDF");
-        btnPDF.addActionListener(new java.awt.event.ActionListener() {
+        btnGenerarPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/pdf .png"))); // NOI18N
+        btnGenerarPDF.setText("Generar PDF");
+        btnGenerarPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPDFActionPerformed(evt);
+                btnGenerarPDFActionPerformed(evt);
             }
         });
 
@@ -118,7 +118,7 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGenerarGrafico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPDF)
+                .addComponent(btnGenerarPDF)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addContainerGap())
@@ -134,7 +134,7 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
                     .addComponent(dateFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar)
                     .addComponent(btnGenerarGrafico)
-                    .addComponent(btnPDF))
+                    .addComponent(btnGenerarPDF))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -164,7 +164,7 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
             return;
         }
 
-        btnPDF.setEnabled(true);
+        btnGenerarPDF.setEnabled(true);
 
         panelGrafico.removeAll();
         panelGrafico.revalidate();
@@ -216,7 +216,7 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+    private void btnGenerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPDFActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Seleccionar destino");
         int userSelection = fileChooser.showSaveDialog(this);
@@ -226,12 +226,12 @@ public class ReporteProductosMasVendidos extends javax.swing.JInternalFrame {
             PDFUtil.crearGraficaPDF(fileToSave.getAbsolutePath() + ".pdf", chart);
         }
 
-    }//GEN-LAST:event_btnPDFActionPerformed
+    }//GEN-LAST:event_btnGenerarPDFActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGenerarGrafico;
-    private javax.swing.JButton btnPDF;
+    private javax.swing.JButton btnGenerarPDF;
     private org.jdesktop.swingx.JXDatePicker dateFechaFin;
     private org.jdesktop.swingx.JXDatePicker dateFechaInicio;
     private javax.swing.JLabel jLabel1;

@@ -193,6 +193,22 @@ public class GenericDAOImpl implements GenericDAO<Object> {
         return ventas;
     }
 
+    @Override
+    public List<Object[]> buscarVentasPorUsuario(String fechaInicio, String fechaFin) {
+        String SQL_WHERE = " WHERE 1=1";
+        if (fechaInicio.equals(fechaFin)) {
+            SQL_WHERE += " AND fecha='" + fechaInicio + "'";
+        } else {
+            SQL_WHERE += " AND fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'";
+        }
+        String SQL = "SELECT historial.usuario_id, historial.monto, nombre, apellido_p FROM "
+                + "(SELECT usuario_id, sum(\"monto\") as \"monto\" FROM ventas " + SQL_WHERE + " GROUP BY usuario_id) "
+                + "AS historial "
+                + "LEFT JOIN usuarios ON historial.usuario_id=usuarios.usuario_id";
+        List<Object[]> ventas = getSesion().createSQLQuery(SQL).list();
+        return ventas;
+    }
+
     /**
      * @return the sesion
      */

@@ -164,6 +164,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Ventas por usuario"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imenuVentasPorUsuarioActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
