@@ -40,7 +40,7 @@ public class Login extends javax.swing.JFrame {
         
         //DATOS PRUEBA
         txtUsuario.setText("victor10sistemas@gmail.com");
-        txtContrasena.setText("victor10sistemas@gmail.com19741");
+        txtContrasena.setText("ww");
 
         //Se cierra la sesión al cerrar la ventana
         this.addWindowListener(new WindowAdapter() {

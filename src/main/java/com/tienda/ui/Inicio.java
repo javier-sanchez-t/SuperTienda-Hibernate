@@ -27,7 +27,7 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio(GenericDAO dao, Usuarios usuario) throws IOException {
         //Se maximiza el Jframe
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setTitle("Super tienda");
+        setTitle("Smart sell");
         initComponents();
 
         //Se recibe el dao creado en login (el dao ya contiene la sesión necesaria, para conulta a BD)
@@ -44,6 +44,7 @@ public class Inicio extends javax.swing.JFrame {
         //Se deshabilita la opción administración para usuarios no administradores
         if (usuario.getTiposUsuarios().getTipoUsuarioId() == 2) {
             menuAdministracion.setVisible(false);
+            menuReportes.setVisible(false);
         }
 
         lblUsuario.setText("BIENVENIDO: " + usuario.getNombre().toUpperCase() + " " + usuario.getApellidoP().toUpperCase());
@@ -62,6 +63,7 @@ public class Inicio extends javax.swing.JFrame {
         lblUsuario = new javax.swing.JLabel();
         Menus = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
+        iMenuCambiarContrasena = new javax.swing.JMenuItem();
         iMenuCerrarSesion = new javax.swing.JMenuItem();
         menuVentas = new javax.swing.JMenu();
         iMenuRegistroVentas = new javax.swing.JMenuItem();
@@ -103,6 +105,19 @@ public class Inicio extends javax.swing.JFrame {
 
         menuArchivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/carpet.png"))); // NOI18N
         menuArchivo.setText("Archivo");
+        menuArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuArchivoActionPerformed(evt);
+            }
+        });
+
+        iMenuCambiarContrasena.setText("Cambiar contraseña");
+        iMenuCambiarContrasena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iMenuCambiarContrasenaActionPerformed(evt);
+            }
+        });
+        menuArchivo.add(iMenuCambiarContrasena);
 
         iMenuCerrarSesion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         iMenuCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/turnOff.png"))); // NOI18N
@@ -281,6 +296,16 @@ public class Inicio extends javax.swing.JFrame {
         estadisticasVentaUsuario.show();
     }//GEN-LAST:event_imenuVentasPorUsuarioActionPerformed
 
+    private void menuArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArchivoActionPerformed
+
+    }//GEN-LAST:event_menuArchivoActionPerformed
+
+    private void iMenuCambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iMenuCambiarContrasenaActionPerformed
+        CambiarContrasena cambiarContrasena = new CambiarContrasena(usuario, dao);
+        PanelEscritorio.add(cambiarContrasena);
+        cambiarContrasena.show();
+    }//GEN-LAST:event_iMenuCambiarContrasenaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -330,6 +355,7 @@ public class Inicio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar Menus;
     private javax.swing.JDesktopPane PanelEscritorio;
+    private javax.swing.JMenuItem iMenuCambiarContrasena;
     private javax.swing.JMenuItem iMenuCategorias;
     private javax.swing.JMenuItem iMenuCerrarSesion;
     private javax.swing.JMenuItem iMenuProductos;
