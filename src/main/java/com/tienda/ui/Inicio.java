@@ -111,6 +111,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        iMenuCambiarContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tienda/iconos/key.png"))); // NOI18N
         iMenuCambiarContrasena.setText("Cambiar contraseña");
         iMenuCambiarContrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

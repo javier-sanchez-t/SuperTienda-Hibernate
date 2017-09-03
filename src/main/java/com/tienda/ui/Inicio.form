@@ -17,6 +17,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="iMenuCambiarContrasena">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/tienda/iconos/key.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cambiar contrase&#xf1;a"/>
               </Properties>
               <Events>
