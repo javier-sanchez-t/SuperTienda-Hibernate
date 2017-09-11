@@ -337,6 +337,7 @@ public class Administracion_cat_productos extends javax.swing.JInternalFrame {
         }
         limpiarCampos();
         btnBuscarActionPerformed(evt);
+        limpiarCampos();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 

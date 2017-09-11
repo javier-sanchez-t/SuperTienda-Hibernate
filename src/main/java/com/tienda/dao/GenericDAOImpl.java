@@ -55,6 +55,50 @@ public class GenericDAOImpl implements GenericDAO<Object> {
 
         return guardado;
     }
+    
+    @Override
+    public boolean eliminar(int id, String nombreTabla, String nombreCampo) {
+        Transaction transaction = null;
+        boolean eliminado = false;
+
+        try {
+            transaction = getSesion().beginTransaction();
+            getSesion().createSQLQuery("DELETE FROM " + nombreTabla + " WHERE " + nombreCampo + "=?")
+                    .setInteger(0, id).executeUpdate();
+            transaction.commit();
+            eliminado = true;
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            eliminado = false;
+        }
+
+        return eliminado;
+    }
+    
+    @Override
+    public boolean eliminar(String id, String nombreTabla, String nombreCampo) {
+        Transaction transaction = null;
+        boolean eliminado = false;
+
+        try {
+            transaction = getSesion().beginTransaction();
+            getSesion().createSQLQuery("DELETE FROM " + nombreTabla + " WHERE " + nombreCampo + "=?")
+                    .setString(0, id).executeUpdate();
+            transaction.commit();
+            eliminado = true;
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            eliminado = false;
+        }
+
+        return eliminado;
+    }
 
     @Override
     public boolean actualizar(Object T) {
@@ -142,50 +186,7 @@ public class GenericDAOImpl implements GenericDAO<Object> {
         return (CategoriasProductos) getSesion().createSQLQuery("SELECT * FROM categorias_productos WHERE categoria_producto_id=?")
                 .addEntity(CategoriasProductos.class)
                 .setInteger(0, categoriaProdId).uniqueResult();
-    }
-
-//    @Override
-//    public boolean eliminarCategoriaProductoPorId(int categoriaProdId) {
-//        Transaction transaction = null;
-//        boolean eliminado = false;
-//
-//        try {
-//            transaction = getSesion().beginTransaction();
-//            getSesion().createSQLQuery("DELETE FROM categorias_productos WHERE categoria_producto_id=?")
-//                    .setInteger(0, categoriaProdId).executeUpdate();
-//            transaction.commit();
-//            eliminado = true;
-//        } catch (HibernateException e) {
-//            if (transaction != null) {
-//                transaction.rollback();
-//            }
-//            e.printStackTrace();
-//            eliminado = false;
-//        }
-//
-//        return eliminado;
-//    }
-    @Override
-    public boolean eliminar(int categoriaProdId, String nombreTabla, String nombreCampo) {
-        Transaction transaction = null;
-        boolean eliminado = false;
-
-        try {
-            transaction = getSesion().beginTransaction();
-            getSesion().createSQLQuery("DELETE FROM " + nombreTabla + " WHERE " + nombreCampo + "=?")
-                    .setInteger(0, categoriaProdId).executeUpdate();
-            transaction.commit();
-            eliminado = true;
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            eliminado = false;
-        }
-
-        return eliminado;
-    }
+    } 
 
     @Override
     public Productos
