@@ -39,8 +39,8 @@ public class Login extends javax.swing.JFrame {
         setTitle("Smart sell");
         
         //DATOS PRUEBA
-        txtUsuario.setText("victor10sistemas@gmail.com");
-        txtContrasena.setText("ww");
+        //txtUsuario.setText("victor10sistemas@gmail.com");
+        //txtContrasena.setText("ww");
 
         //Se cierra la sesión al cerrar la ventana
         this.addWindowListener(new WindowAdapter() {
