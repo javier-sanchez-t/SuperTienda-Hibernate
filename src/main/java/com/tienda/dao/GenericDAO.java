@@ -24,6 +24,8 @@ public interface GenericDAO<T> {
 
     boolean actualizar(Object T);
 
+    boolean eliminar(int id, String nombreTabla, String nombreCampo);
+
     //Usuarios
     Usuarios login(String nombre_usuario, String contrasena);
 

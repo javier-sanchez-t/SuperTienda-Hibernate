@@ -144,17 +144,63 @@ public class GenericDAOImpl implements GenericDAO<Object> {
                 .setInteger(0, categoriaProdId).uniqueResult();
     }
 
+//    @Override
+//    public boolean eliminarCategoriaProductoPorId(int categoriaProdId) {
+//        Transaction transaction = null;
+//        boolean eliminado = false;
+//
+//        try {
+//            transaction = getSesion().beginTransaction();
+//            getSesion().createSQLQuery("DELETE FROM categorias_productos WHERE categoria_producto_id=?")
+//                    .setInteger(0, categoriaProdId).executeUpdate();
+//            transaction.commit();
+//            eliminado = true;
+//        } catch (HibernateException e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            e.printStackTrace();
+//            eliminado = false;
+//        }
+//
+//        return eliminado;
+//    }
     @Override
-    public Productos buscarProductoPorCodigo(String codigo) {
+    public boolean eliminar(int categoriaProdId, String nombreTabla, String nombreCampo) {
+        Transaction transaction = null;
+        boolean eliminado = false;
+
+        try {
+            transaction = getSesion().beginTransaction();
+            getSesion().createSQLQuery("DELETE FROM " + nombreTabla + " WHERE " + nombreCampo + "=?")
+                    .setInteger(0, categoriaProdId).executeUpdate();
+            transaction.commit();
+            eliminado = true;
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            eliminado = false;
+        }
+
+        return eliminado;
+    }
+
+    @Override
+    public Productos
+            buscarProductoPorCodigo(String codigo) {
         Productos producto = (Productos) getSesion().createSQLQuery("SELECT * FROM productos WHERE producto_id=?")
-                .addEntity(Productos.class)
+                .addEntity(Productos.class
+                )
                 .setString(0, codigo).uniqueResult();
         return producto;
     }
 
     @Override
     public List<Productos> buscarTodosProductos() {
-        return getSesion().createCriteria(Productos.class).list();
+        return getSesion().createCriteria(Productos.class
+        ).list();
     }
 
     @Override
@@ -167,7 +213,8 @@ public class GenericDAOImpl implements GenericDAO<Object> {
     @Override
     public List<Productos> buscarProductos(String parametros) {
         return getSesion().createSQLQuery("SELECT * FROM productos" + parametros)
-                .addEntity(Productos.class).list();
+                .addEntity(Productos.class
+                ).list();
     }
 
     @Override
@@ -177,9 +224,11 @@ public class GenericDAOImpl implements GenericDAO<Object> {
             SQL_WHERE += " AND fecha='" + fechaInicio + "'";
         } else {
             SQL_WHERE += " AND fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'";
+
         }
         List<Ventas> ventas = getSesion().createSQLQuery("SELECT * FROM ventas" + SQL_WHERE)
-                .addEntity(Ventas.class).list();
+                .addEntity(Ventas.class
+                ).list();
         return ventas;
     }
 
